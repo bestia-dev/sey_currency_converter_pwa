@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>page_main.html</title>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta name="author" content="https://github.com/LucianoBestia/new_date_time_units_and_formats">
+    <meta name="viewport" content="width = device-width,initial-scale = 1.0" />
+    <link rel="stylesheet" href="../css/pwa_currency_converter.css">
+</head>
+<!--html and layout-->
+
+<body>
+    <div id="div_body" style="height: 100vh;width: var(--body_width)">
+        <div class="fixed_header" style="height: 7vh;width: var(--body_width)">
+            <div id="div_main_header" style="display: grid;width: var(--body_width);grid-template-columns: 80% 10% 10%; grid-template-rows: 100%;">
+                <div id="div_main_title">PWA Currency converter</div>
+                <div id="div_reload_button">↻</div>
+                <div id="div_hamburger_button">☰</div>
+            </div>
+        </div>
+
+        <div id="div_main_layout" style="position: absolute;width: var(--body_width); top:7vh;height:93vh; display: grid;grid-template-columns: 100%; grid-template-rows: 17% 14% 17% 52%;">
+            <div id="div_input" style="display: grid;grid-template-columns: 75% 25%; grid-template-rows: 100%;">
+                <div id="div_input_number">0</div>
+                <div id="div_input_unit">EUR</div>
+            </div>
+            <!--row-->
+            <div id="div_toolbar">0.5</div>
+            <!--row-->
+            <div id="div_output" style="display: grid;grid-template-columns: 75% 25%; grid-template-rows: 100%;">
+                <div id="div_output_number">0</div>
+                <div id="div_output_unit">USD</div>
+            </div>
+            <!--row-->
+            <div id="div_numeric_pad_layout" style="display: grid;grid-template-columns: 20% 20% 20% 20% 20%; grid-template-rows: 25% 25% 25% 25%;">
+                <div id="div_7" class="div_cell">7</div>
+                <div id="div_8" class="div_cell">8</div>
+                <div id="div_9" class="div_cell">9</div>
+                <div id="div_backspace" class="div_cell cell_commands">⌫</div>
+                <div id="div_clear" class="div_cell cell_commands">C</div>
+                <!--row-->
+                <div id="div_4" class="div_cell">4</div>
+                <div id="div_5" class="div_cell">5</div>
+                <div id="div_6" class="div_cell">6</div>
+                <div id="div_now" class="div_cell"></div>
+                <div id="div_hyphen" class="div_cell"></div>
+                <!--row-->
+                <div id="div_1" class="div_cell">1</div>
+                <div id="div_2" class="div_cell">2</div>
+                <div id="div_3" class="div_cell">3</div>
+                <div id="div_colon" class="div_cell"></div>
+                <div id="div_slash" class="div_cell"></div>
+                <!--row-->
+                <div id="div_0" class="div_cell">0</div>
+                <div id="div_dot" class="div_cell">.</div>
+                <div id="div_common_era" class="div_cell"></div>
+                <div id="div_veek" class="div_cell"></div>
+                <div id="div_day" class="div_cell"></div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
