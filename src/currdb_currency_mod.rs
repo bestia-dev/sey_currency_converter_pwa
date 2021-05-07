@@ -4,7 +4,7 @@
 
 use crate::currdb_mod::{Databases, ObjectStores};
 use crate::idbr_mod as idbr;
-use crate::web_sys_mod as w;
+//use crate::web_sys_mod as w;
 use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 use strum::AsStaticRef;
@@ -42,6 +42,7 @@ pub async fn put_inside_object_store(
     object_store.put_jsvalue(iso_code, &jsvalue);
 }
 
+/*
 /// put inside transaction
 pub async fn put_inside_transaction(
     tx: &idbr::Transaction,
@@ -59,7 +60,7 @@ pub async fn put_inside_database(iso_code: String, name: String, rate: f64) {
     put_inside_transaction(&tx, iso_code, name, rate).await;
     tx.close();
 }
-
+*/
 pub async fn fill_currency_store(base_currency: &str, json_map_string_value: &Map<String, Value>) {
     let db = idbr::Database::use_db(&Databases::Currdb.as_static()).await;
     let tx = db.transaction_open();

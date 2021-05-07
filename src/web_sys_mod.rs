@@ -3,7 +3,7 @@
 //! local_storage, session_storage,...
 
 // region: use
-use chrono::{NaiveDate, NaiveTime};
+use chrono::{NaiveDate};
 use unwrap::unwrap;
 use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::JsFuture;
