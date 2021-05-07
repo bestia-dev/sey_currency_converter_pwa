@@ -79,7 +79,7 @@ pub async fn fill_currency_store(base_currency: &str, json_map_string_value: &Ma
     )
     .await;
     tx.close();
-    w::debug_write(&format!("transaction end: {}", ""));
+    //w::debug_write(&format!("transaction end: {}", ""));
 }
 
 pub async fn get_rate(iso_code: &str) -> f64 {

@@ -98,6 +98,7 @@ pub async fn page_output_currency() {
 
     // region: event handlers
     on_click!("div_back", div_back_on_click);
+    on_click!("div_reload_button", div_reload_button_on_click);
 
     // handler for every row
     for i in 0..=row_number_counter {
@@ -117,13 +118,20 @@ pub fn div_back_on_click(_element_id: &str) {
 pub fn unit_on_click(element_prefix: &str, row_number: usize) {
     let element_id = format!("{}{}", element_prefix, row_number);
     spawn_local(async move {
-        w::debug_write(&format!("element_id: {}", element_id));
+        //w::debug_write(&format!("element_id: {}", element_id));
         let iso_code = w::get_text(&element_id);
         let iso_code = iso_code.clone();
         crate::currdb_config_mod::set_quote_currency(&iso_code).await;
-        // find the new rate
-        let rate = crate::currdb_currency_mod::get_rate(&iso_code).await;
-        crate::currdb_config_mod::set_rate(&rate.to_string()).await;
-        div_back_on_click("");
+        crate::fetch_rates_mod::modify_rate().await;
+        crate::page_main_mod::page_main().await;
+    });
+}
+
+/// reload json from floatrates.com and save to indexeddb
+pub fn div_reload_button_on_click(_element_id: &str) {
+    spawn_local(async {
+        crate::fetch_rates_mod::fetch_and_save().await;
+        crate::fetch_rates_mod::modify_rate().await;
+        page_output_currency().await;
     });
 }

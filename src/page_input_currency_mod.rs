@@ -81,11 +81,6 @@ pub async fn page_input_currency() {
         let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_unit", &key);
         let template_with_data =
             ut::replace_wt_placeholder(&template_with_data, "wt_name", &fields.name);
-        let template_with_data = ut::replace_wt_placeholder(
-            &template_with_data,
-            "wt_rate",
-            &format!("{:.3}", fields.rate),
-        );
 
         html_list.push_str(&template_with_data);
         if cursor.next().await.is_none() {
@@ -120,33 +115,19 @@ pub fn unit_on_click(element_prefix: &str, row_number: usize) {
     let base_currency = w::get_text(&element_id);
     spawn_local(async move {
         let base_currency = base_currency.clone();
-        w::debug_write(&format!("input base_currency: {}", &base_currency));
+        //w::debug_write(&format!("input base_currency: {}", &base_currency));
         crate::currdb_config_mod::set_base_currency(&base_currency).await;
-        // read exchange rate for new base currency div_reload_button_on_click)
-        let v = crate::page_main_mod::fetch_and_serde_json(&base_currency).await;
-        let json_map_string_value = unwrap!(v.as_object());
-        crate::currdb_currency_mod::fill_currency_store(&base_currency, json_map_string_value)
-            .await;
-        // find the new rate
-        let quote_currency = crate::currdb_config_mod::get_quote_currency().await;
-        w::debug_write(&format!("quote_currency: {}", &quote_currency));
-        let rate = crate::currdb_currency_mod::get_rate(&quote_currency).await;
-        w::debug_write(&format!("rate: {}", rate));
-        crate::currdb_config_mod::set_rate(&rate.to_string()).await;
-        div_back_on_click("");
+        crate::fetch_rates_mod::fetch_and_save().await;
+        crate::fetch_rates_mod::modify_rate().await;
+        crate::page_main_mod::page_main().await;
     });
 }
 
 /// reload json from floatrates.com and save to indexeddb
 pub fn div_reload_button_on_click(_element_id: &str) {
-    w::debug_write("div_reload_button_on_click");
     spawn_local(async {
-        let base_currency = crate::currdb_config_mod::get_base_currency().await;
-        w::debug_write(&base_currency);
-        let v = crate::page_main_mod::fetch_and_serde_json(&base_currency).await;
-        let json_map_string_value = unwrap!(v.as_object());
-        crate::currdb_currency_mod::fill_currency_store(&base_currency, json_map_string_value)
-            .await;
-        page_input_currency();
+        crate::fetch_rates_mod::fetch_and_save().await;
+        crate::fetch_rates_mod::modify_rate().await;
+        page_input_currency().await;
     });
 }

@@ -5,16 +5,16 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.506.1746  date: 2021-05-06 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.507.1246  date: 2021-05-07 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1066-green.svg)]()
-[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-75-blue.svg)]()
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-151-purple.svg)]()
-[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)]()
-[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)]()
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1108-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-77-blue.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-152-purple.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 
 [comment]: # (lmake_lines_of_code end)
 

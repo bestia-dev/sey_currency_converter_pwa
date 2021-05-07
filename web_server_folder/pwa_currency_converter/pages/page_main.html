@@ -20,13 +20,17 @@
             </div>
         </div>
 
-        <div id="div_main_layout" style="position: absolute;width: var(--body_width); top:7vh;height:93vh; display: grid;grid-template-columns: 100%; grid-template-rows: 17% 14% 17% 52%;">
+        <div id="div_main_layout" style="position: absolute;width: var(--body_width); top:7vh;height:93vh; display: grid;grid-template-columns: 100%; grid-template-rows: 17vh 14vh 17vh 52vh;">
             <div id="div_input" style="display: grid;grid-template-columns: 75% 25%; grid-template-rows: 100%;">
                 <div id="div_input_number">0</div>
                 <div id="div_input_unit">EUR</div>
             </div>
             <!--row-->
-            <div id="div_toolbar">0.5</div>
+            <div id="div_midbar" style="line-height: 12vh;display: grid;grid-template-columns: 10% 60% 30%; grid-template-rows: 100%;">
+                <div id="div_reverse">⇵</div>
+                <div id="div_exchange_rate" class="small">1EUR=1EUR</div>
+                <div id="div_rate_date">7.5.2021</div>
+            </div>
             <!--row-->
             <div id="div_output" style="display: grid;grid-template-columns: 75% 25%; grid-template-rows: 100%;">
                 <div id="div_output_number">0</div>

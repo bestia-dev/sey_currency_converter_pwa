@@ -7,6 +7,7 @@ use wasm_bindgen::JsValue;
 mod currdb_config_mod;
 mod currdb_currency_mod;
 mod currdb_mod;
+mod fetch_rates_mod;
 mod idbr_imports_mod;
 mod idbr_mod;
 mod page_input_currency_mod;

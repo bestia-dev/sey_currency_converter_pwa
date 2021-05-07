@@ -121,13 +121,11 @@ the grid-template-columns and grid-template-rows are defined in the html*/
     padding-right: 5%;
 }
 
-#div_toolbar {
-    cursor: pointer;
-    font-size: 20px;
+#div_midbar {
+    font-size: 15px;
     background-color: var(--b_color_toolbar);
     color: var(--f_color_body);
-    line-height: 12vh;
-    padding-left: 3%;
+    text-align: center;
 }
 
 #div_output {

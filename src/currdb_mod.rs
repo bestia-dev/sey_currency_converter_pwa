@@ -70,13 +70,13 @@ fn upgrade_from_v01_to_v02(db: &idb::Database, tx: &idb::Transaction) {
     let config_object_store = tx.get_object_store_versionchange(&ObjectStores::Config.as_static());
     // this is a special put inside a transaction, that is inside version upgrade
     config_object_store.put("base_currency", "EUR");
-    config_object_store.put("quote_currency", "USD");
-    config_object_store.put("rate", "1.21");
+    config_object_store.put("quote_currency", "EUR");
+    config_object_store.put("rate", "1");
     config_object_store.put("date_fetch", "none");
     config_object_store.put("input_number", "0");
 
     let currency_object_store =
         tx.get_object_store_versionchange(&ObjectStores::Currency.as_static());
-    let jsvalue = crate::currdb_currency_mod::to_jsvalue("U.S. Dollar".to_owned(), 0.782);
-    currency_object_store.put_jsvalue("USD".to_owned(), &jsvalue);
+    let jsvalue = crate::currdb_currency_mod::to_jsvalue("Euro".to_owned(), 1.0);
+    currency_object_store.put_jsvalue("EUR".to_owned(), &jsvalue);
 }

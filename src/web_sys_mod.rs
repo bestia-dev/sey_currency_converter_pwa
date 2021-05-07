@@ -3,6 +3,7 @@
 //! local_storage, session_storage,...
 
 // region: use
+use chrono::{NaiveDate, NaiveTime};
 use unwrap::unwrap;
 use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::JsFuture;
@@ -107,4 +108,15 @@ pub async fn fetch_response(url: &str) -> String {
     // debug_write(&txt_response);
     // returns response as String
     txt_response
+}
+
+pub fn get_now_date() -> String {
+    let now_js = js_sys::Date::new_0();
+    let now_date = NaiveDate::from_ymd(
+        now_js.get_full_year() as i32,
+        now_js.get_month() + 1,
+        now_js.get_date(),
+    );
+    // return
+    now_date.format("%Y-%m-%d").to_string()
 }
