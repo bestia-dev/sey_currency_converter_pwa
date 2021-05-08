@@ -9,7 +9,6 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::spawn_local;
 
-use crate::currdb_currency_mod::*;
 use crate::on_click;
 use crate::row_on_click;
 use crate::web_sys_mod as w;
@@ -21,41 +20,18 @@ pub async fn page_output_currency() {
     // fetch page_unit.html and inject it
     let resp_body_text = w::fetch_response("pages/page_output_currency.html").await;
     // only the html inside the <body> </body>
-    let (html_fragment, _new_pos_cursor) = unwrap!(ut::get_delimited_text(
-        &resp_body_text,
-        0,
-        "<body>",
-        "</body>"
-    ));
+    let (html_fragment, _new_pos_cursor) = unwrap!(ut::get_delimited_text(&resp_body_text, 0, "<body>", "</body>"));
     // get template
-    let (template, _new_pos_cursor) = unwrap!(ut::get_delimited_text(
-        &html_fragment,
-        0,
-        "<!--use as template-->",
-        "<!--end use as template-->",
-    ));
+    let (template, _new_pos_cursor) = unwrap!(ut::get_delimited_text(&html_fragment, 0, "<!--use as template-->", "<!--end use as template-->",));
     // remove template from html_fragment
-    let html_fragment = ut::get_text_without_delimited_fragment(
-        &html_fragment,
-        0,
-        "<!--use as template-->",
-        "<!--end use as template-->",
-    );
+    let html_fragment = ut::get_text_without_delimited_fragment(&html_fragment, 0, "<!--use as template-->", "<!--end use as template-->");
     // remove ignore as template
-    let html_fragment = ut::get_text_without_delimited_fragment(
-        &html_fragment,
-        0,
-        "<!--ignore as template-->",
-        "<!--end ignore as template-->",
-    );
+    let html_fragment = ut::get_text_without_delimited_fragment(&html_fragment, 0, "<!--ignore as template-->", "<!--end ignore as template-->");
 
     w::set_inner_html("div_for_wasm_html_injecting", &html_fragment);
 
     // region: binding - read from config
-    w::set_text(
-        "div_units_base_currency",
-        &crate::currdb_config_mod::get_base_currency().await,
-    );
+    w::set_text("div_units_input_currency", &crate::currdb_config_mod::get_input_currency().await);
     // endregion: binding - read from config
 
     // region: read from indexed db row by row
@@ -73,19 +49,13 @@ pub async fn page_output_currency() {
         let key = cursor.get_key();
         let key: String = unwrap!(serde_wasm_bindgen::from_value(key));
         let value = cursor.get_value();
-        let fields: ValueStruct = unwrap!(serde_wasm_bindgen::from_value(value));
+        let fields: crate::currdb_currency_mod::ValueStruct = unwrap!(serde_wasm_bindgen::from_value(value));
 
-        let template_with_data =
-            template.replace("row_number_counter", &row_number_counter.to_string());
+        let template_with_data = template.replace("row_number_counter", &row_number_counter.to_string());
 
         let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_unit", &key);
-        let template_with_data =
-            ut::replace_wt_placeholder(&template_with_data, "wt_name", &fields.name);
-        let template_with_data = ut::replace_wt_placeholder(
-            &template_with_data,
-            "wt_rate",
-            &format!("{:.3}", fields.rate),
-        );
+        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_name", &fields.name);
+        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_rate", &format!("{:.3}", fields.rate));
 
         html_list.push_str(&template_with_data);
         if cursor.next().await.is_none() {
@@ -121,7 +91,7 @@ pub fn unit_on_click(element_prefix: &str, row_number: usize) {
         //w::debug_write(&format!("element_id: {}", element_id));
         let iso_code = w::get_text(&element_id);
         let iso_code = iso_code.clone();
-        crate::currdb_config_mod::set_quote_currency(&iso_code).await;
+        crate::currdb_config_mod::set_output_currency(&iso_code).await;
         crate::fetch_rates_mod::modify_rate().await;
         crate::page_main_mod::page_main().await;
     });

@@ -241,7 +241,7 @@ the grid-template-columns and grid-template-rows are defined in the html*/
     text-align: center;
 }
 
-#div_units_base_currency {
+#div_units_input_currency {
     font-size: 20px;
     text-align: right;
     padding-right: 3%;

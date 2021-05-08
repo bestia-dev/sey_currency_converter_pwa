@@ -32,12 +32,7 @@ pub fn from_jsvalue(jsvalue: JsValue) -> (String, f64) {
 }
 
 /// put in ObjectStore
-pub async fn put_inside_object_store(
-    object_store: &idbr::ObjectStoreInsideTransaction,
-    iso_code: String,
-    name: String,
-    rate: f64,
-) {
+pub async fn put_inside_object_store(object_store: &idbr::ObjectStoreInsideTransaction, iso_code: String, name: String, rate: f64) {
     let jsvalue = to_jsvalue(name, rate);
     object_store.put_jsvalue(iso_code, &jsvalue);
 }
@@ -61,7 +56,7 @@ pub async fn put_inside_database(iso_code: String, name: String, rate: f64) {
     tx.close();
 }
 */
-pub async fn fill_currency_store(base_currency: &str, json_map_string_value: &Map<String, Value>) {
+pub async fn fill_currency_store(input_currency: &str, json_map_string_value: &Map<String, Value>) {
     let db = idbr::Database::use_db(&Databases::Currdb.as_static()).await;
     let tx = db.transaction_open();
     let store = tx.get_object_store_readwrite(&ObjectStores::Currency.as_static());
@@ -72,22 +67,14 @@ pub async fn fill_currency_store(base_currency: &str, json_map_string_value: &Ma
         put_inside_object_store(&store, iso_code, name, rate).await;
     }
     // put also base currency
-    put_inside_object_store(
-        &store,
-        base_currency.to_owned(),
-        base_currency.to_owned(),
-        1.0,
-    )
-    .await;
+    put_inside_object_store(&store, input_currency.to_owned(), input_currency.to_owned(), 1.0).await;
     tx.close();
     //w::debug_write(&format!("transaction end: {}", ""));
 }
 
 pub async fn get_rate(iso_code: &str) -> f64 {
     let db = idbr::Database::use_db(&Databases::Currdb.as_static()).await;
-    let jsvalue = db
-        .get_jsvalue(ObjectStores::Currency.as_static(), iso_code)
-        .await;
+    let jsvalue = db.get_jsvalue(ObjectStores::Currency.as_static(), iso_code).await;
     let (_name, rate) = from_jsvalue(jsvalue);
     // return
     rate

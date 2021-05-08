@@ -1,4 +1,4 @@
-// page_input_currency_mod.rs
+// page_manual_rates_mod.rs
 
 //use std::ops::Index;
 
@@ -10,15 +10,15 @@ use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::spawn_local;
 
 use crate::on_click;
-use crate::row_on_click;
+//use crate::row_on_click;
 use crate::web_sys_mod as w;
 //use crate::idbr_mod;
 use crate::utils_mod as ut;
 
 /// fetch and inject HTML fragment into index.html/div_for_wasm_html_injecting
-pub async fn page_input_currency() {
+pub async fn page_manual_rates() {
     // fetch page_unit.html and inject it
-    let resp_body_text = w::fetch_response("pages/page_input_currency.html").await;
+    let resp_body_text = w::fetch_response("pages/page_manual_rates.html").await;
     // only the html inside the <body> </body>
     let (html_fragment, _new_pos_cursor) = unwrap!(ut::get_delimited_text(&resp_body_text, 0, "<body>", "</body>"));
     // get template
@@ -31,7 +31,7 @@ pub async fn page_input_currency() {
     w::set_inner_html("div_for_wasm_html_injecting", &html_fragment);
 
     // region: binding - read from config
-    w::set_text("div_units_input_currency", &crate::currdb_config_mod::get_input_currency().await);
+
     // endregion: binding - read from config
 
     // region: read from indexed db row by row
@@ -41,21 +41,23 @@ pub async fn page_input_currency() {
     use crate::idbr_mod as idb;
     use strum::AsStaticRef;
     let db = idb::Database::use_db(&Databases::Currdb.as_static()).await;
-    let cursor = db.get_cursor(ObjectStores::Currency.as_static()).await;
+    let cursor = db.get_cursor(ObjectStores::ManualRates.as_static()).await;
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
     let mut row_number_counter: usize = 0;
     loop {
         let key = cursor.get_key();
-        let key: String = unwrap!(serde_wasm_bindgen::from_value(key));
+        let _key: String = unwrap!(serde_wasm_bindgen::from_value(key));
         let value = cursor.get_value();
-        let fields: crate::currdb_currency_mod::ValueStruct = unwrap!(serde_wasm_bindgen::from_value(value));
+        let fields: crate::currdb_manual_rates_mod::ValueStruct = unwrap!(serde_wasm_bindgen::from_value(value));
 
         let template_with_data = template.replace("row_number_counter", &row_number_counter.to_string());
 
-        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_unit", &key);
-        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_name", &fields.name);
-
+        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_input_currency", &fields.input_currency);
+        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_output_currency", &fields.output_currency);
+        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_rate", &format!("{:.3}", fields.rate));
+        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_date", &fields.date);
+        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_description", &fields.description);
         html_list.push_str(&template_with_data);
         if cursor.next().await.is_none() {
             break;
@@ -67,12 +69,11 @@ pub async fn page_input_currency() {
 
     // region: event handlers
     on_click!("div_back", div_back_on_click);
-    on_click!("div_reload_button", div_reload_button_on_click);
 
     // handler for every row
-    for i in 0..=row_number_counter {
-        row_on_click!("div_unit_", i, unit_on_click);
-    }
+    // for i in 0..=row_number_counter {
+    //     row_on_click!("div_unit_", i, unit_on_click);
+    // }
     // endregion: event handlers
 }
 
@@ -80,28 +81,5 @@ pub async fn page_input_currency() {
 pub fn div_back_on_click(_element_id: &str) {
     spawn_local(async {
         crate::page_main_mod::page_main().await;
-    });
-}
-
-/// unit is a field in the row of the list
-pub fn unit_on_click(element_prefix: &str, row_number: usize) {
-    let element_id = format!("{}{}", element_prefix, row_number);
-    let input_currency = w::get_text(&element_id);
-    spawn_local(async move {
-        let input_currency = input_currency.clone();
-        //w::debug_write(&format!("input input_currency: {}", &input_currency));
-        crate::currdb_config_mod::set_input_currency(&input_currency).await;
-        crate::fetch_rates_mod::fetch_and_save().await;
-        crate::fetch_rates_mod::modify_rate().await;
-        crate::page_main_mod::page_main().await;
-    });
-}
-
-/// reload json from floatrates.com and save to indexeddb
-pub fn div_reload_button_on_click(_element_id: &str) {
-    spawn_local(async {
-        crate::fetch_rates_mod::fetch_and_save().await;
-        crate::fetch_rates_mod::modify_rate().await;
-        page_input_currency().await;
     });
 }

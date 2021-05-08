@@ -13,21 +13,14 @@ pub fn check_browser_capability() {
     idbjs::check_browser_capability();
 }
 
-pub async fn put_key_value(
-    db_name: &str,
-    store_name: &str,
-    key: &str,
-    value: &str,
-) -> Result<(), JsValue> {
+pub async fn put_key_value(db_name: &str, store_name: &str, key: &str, value: &str) -> Result<(), JsValue> {
     // return
     idbjs::put_key_value(db_name, store_name, key, value).await
 }
 
 pub async fn get_key_value(db_name: &str, store_name: &str, key: &str) -> String {
     // return
-    unwrap!(idbjs::get_key_value(db_name, store_name, key)
-        .await
-        .as_string())
+    unwrap!(idbjs::get_key_value(db_name, store_name, key).await.as_string())
 }
 
 // region: Database
@@ -36,14 +29,8 @@ pub struct Database {
 }
 impl Database {
     /// init and upgrade
-    pub async fn init_upgrade_db(
-        db_name: &str,
-        version: u32,
-        rust_closure_for_upgrade: &Closure<dyn Fn(JsValue, JsValue, JsValue, JsValue)>,
-    ) {
-        idbjs::init_upgrade_db(db_name, version, rust_closure_for_upgrade)
-            .await
-            .unwrap();
+    pub async fn init_upgrade_db(db_name: &str, version: u32, rust_closure_for_upgrade: &Closure<dyn Fn(JsValue, JsValue, JsValue, JsValue)>) {
+        idbjs::init_upgrade_db(db_name, version, rust_closure_for_upgrade).await.unwrap();
     }
     pub async fn use_db(db_name: &str) -> Self {
         let db = idbjs::use_db(&db_name).await;
@@ -57,12 +44,7 @@ impl Database {
         let tx = idbjs::transaction_open(&self.db);
         Transaction::from(tx)
     }
-    pub async fn put_key_value(
-        &self,
-        store_name: &str,
-        key: &str,
-        value: &str,
-    ) -> Result<(), JsValue> {
+    pub async fn put_key_value(&self, store_name: &str, key: &str, value: &str) -> Result<(), JsValue> {
         idbjs::db_put_key_value(&self.db, store_name, key, value).await
     }
     pub async fn get_cursor(&self, store_name: &str) -> Cursor {

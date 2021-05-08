@@ -2,6 +2,8 @@
 
 // Specific code for work with the `currdb` database
 
+use std::fmt::format;
+
 use crate::idbr_mod as idb;
 use crate::web_sys_mod as w;
 use strum::AsStaticRef;
@@ -20,48 +22,43 @@ pub enum Databases {
 pub enum ObjectStores {
     Currency,
     Config,
+    ManualRates,
 }
 
 /// init_upgrade_currdb will create the database and call upgrade_currdb()
 pub async fn init_upgrade_currdb() {
     // pointer for rust closure on the Heap
-    let rust_closure_for_upgrade = Closure::wrap(Box::new(
-        move |db: JsValue, old_version: JsValue, new_version: JsValue, transaction: JsValue| {
-            upgrade_currdb(db, old_version, new_version, transaction);
-        },
-    )
-        as Box<dyn Fn(JsValue, JsValue, JsValue, JsValue)>);
-    idb::Database::init_upgrade_db(&Databases::Currdb.as_static(), 2, &rust_closure_for_upgrade)
-        .await;
+    let rust_closure_for_upgrade = Closure::wrap(Box::new(move |db: JsValue, old_version: JsValue, new_version: JsValue, transaction: JsValue| {
+        upgrade_currdb(db, old_version, new_version, transaction);
+    }) as Box<dyn Fn(JsValue, JsValue, JsValue, JsValue)>);
+    idb::Database::init_upgrade_db(&Databases::Currdb.as_static(), 2, &rust_closure_for_upgrade).await;
 }
 
 /// pass this function to javascript as closure
-pub fn upgrade_currdb(
-    db: JsValue,
-    old_version: JsValue,
-    new_version: JsValue,
-    transaction: JsValue,
-) {
+pub fn upgrade_currdb(db: JsValue, old_version: JsValue, new_version: JsValue, transaction: JsValue) {
     let db = idb::Database::from(db);
     let tx = idb::Transaction::from(transaction);
     let old_version = unwrap!(old_version.as_f64()) as i32;
     let new_version = unwrap!(new_version.as_f64()) as i32;
-    w::debug_write(&format!(
-        "upgrade_currdb from v{} to v{}",
-        old_version, new_version
-    ));
+    w::debug_write(&format!("upgrade_currdb from v{} to v{}", old_version, new_version));
 
     if old_version < 1 {
-        upgrade_from_v00_to_v01(&db);
+        upgrade_from_v00_to_v01(&db, &tx);
     }
     if old_version < 2 {
         upgrade_from_v01_to_v02(&db, &tx);
     }
+    if old_version < 3 {
+        upgrade_from_v02_to_v03(&db, &tx);
+    }
 }
 
-fn upgrade_from_v00_to_v01(db: &idb::Database) {
+fn upgrade_from_v00_to_v01(db: &idb::Database, tx: &idb::Transaction) {
     w::debug_write("upgrade_from_v00_to_v01");
     db.create_object_store(&ObjectStores::Currency.as_static());
+    let currency_object_store = tx.get_object_store_versionchange(&ObjectStores::Currency.as_static());
+    let jsvalue = crate::currdb_currency_mod::to_jsvalue("Euro".to_owned(), 1.0);
+    currency_object_store.put_jsvalue("EUR".to_owned(), &jsvalue);
 }
 
 fn upgrade_from_v01_to_v02(db: &idb::Database, tx: &idb::Transaction) {
@@ -69,14 +66,18 @@ fn upgrade_from_v01_to_v02(db: &idb::Database, tx: &idb::Transaction) {
     db.create_object_store(&ObjectStores::Config.as_static());
     let config_object_store = tx.get_object_store_versionchange(&ObjectStores::Config.as_static());
     // this is a special put inside a transaction, that is inside version upgrade
-    config_object_store.put("base_currency", "EUR");
-    config_object_store.put("quote_currency", "EUR");
+    config_object_store.put("input_currency", "EUR");
+    config_object_store.put("output_currency", "EUR");
     config_object_store.put("rate", "1");
     config_object_store.put("date_fetch", "none");
     config_object_store.put("input_number", "0");
+}
 
-    let currency_object_store =
-        tx.get_object_store_versionchange(&ObjectStores::Currency.as_static());
-    let jsvalue = crate::currdb_currency_mod::to_jsvalue("Euro".to_owned(), 1.0);
-    currency_object_store.put_jsvalue("EUR".to_owned(), &jsvalue);
+fn upgrade_from_v02_to_v03(db: &idb::Database, tx: &idb::Transaction) {
+    w::debug_write("upgrade_from_v02_to_v03");
+    db.create_object_store(&ObjectStores::ManualRates.as_static());
+    let currency_object_store = tx.get_object_store_versionchange(&ObjectStores::ManualRates.as_static());
+    let jsvalue = crate::currdb_manual_rates_mod::to_jsvalue("USD".to_owned(), "USD".to_owned(), "2021-01-01".to_owned(), 1.0, "manual".to_owned());
+    let key = format!("{}-{}-{}", "USD", "USD", "manual");
+    currency_object_store.put_jsvalue(key, &jsvalue);
 }

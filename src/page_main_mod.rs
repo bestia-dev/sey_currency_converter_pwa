@@ -15,17 +15,13 @@ pub async fn page_main() {
     // fetch page_main.html and inject it
     let resp_body_text = w::fetch_response("pages/page_main.html").await;
     // only the html inside the <body> </body>
-    let (html_fragment, _new_pos_cursor) =
-        ut::get_delimited_text(&resp_body_text, 0, "<body>", "</body>").unwrap();
+    let (html_fragment, _new_pos_cursor) = ut::get_delimited_text(&resp_body_text, 0, "<body>", "</body>").unwrap();
     w::set_inner_html("div_for_wasm_html_injecting", &html_fragment);
 
     // region: binding - read from config
-    w::set_text(
-        "div_input_number",
-        &crate::currdb_config_mod::get_input_number().await,
-    );
-    let input_unit = &crate::currdb_config_mod::get_base_currency().await;
-    let output_unit = &crate::currdb_config_mod::get_quote_currency().await;
+    w::set_text("div_input_number", &crate::currdb_config_mod::get_input_number().await);
+    let input_unit = &crate::currdb_config_mod::get_input_currency().await;
+    let output_unit = &crate::currdb_config_mod::get_output_currency().await;
     let exchange_rate = &crate::currdb_config_mod::get_rate().await;
     let exchange_rate = exchange_rate.parse::<f64>().unwrap();
 
@@ -64,6 +60,7 @@ pub async fn page_main() {
 
     on_click!("div_hamburger_button", div_hamburger_button_on_click);
     on_click!("div_reverse", div_reverse_on_click);
+    on_click!("div_exchange_rate", div_exchange_rate_on_click);
 
     // endregion: event handlers
 }
@@ -162,13 +159,19 @@ fn div_reverse_on_click(_element_id: &str) {
         let old_output_number = w::get_text("div_output_number");
         crate::currdb_config_mod::set_input_number(&old_output_number).await;
 
-        let input_unit = &crate::currdb_config_mod::get_base_currency().await;
-        let output_unit = &crate::currdb_config_mod::get_quote_currency().await;
-        crate::currdb_config_mod::set_base_currency(output_unit).await;
-        crate::currdb_config_mod::set_quote_currency(input_unit).await;
+        let input_unit = &crate::currdb_config_mod::get_input_currency().await;
+        let output_unit = &crate::currdb_config_mod::get_output_currency().await;
+        crate::currdb_config_mod::set_input_currency(output_unit).await;
+        crate::currdb_config_mod::set_output_currency(input_unit).await;
         crate::fetch_rates_mod::fetch_and_save().await;
         crate::fetch_rates_mod::modify_rate().await;
 
         crate::page_main_mod::page_main().await;
+    });
+}
+/// opens the manual rates
+fn div_exchange_rate_on_click(_element_id: &str) {
+    spawn_local(async {
+        crate::page_manual_rates_mod::page_manual_rates().await;
     });
 }

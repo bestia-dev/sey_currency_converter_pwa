@@ -8,18 +8,15 @@ use unwrap::unwrap;
 use crate::web_sys_mod as w;
 
 pub async fn fetch_and_save() {
-    let base_currency = crate::currdb_config_mod::get_base_currency().await;
-    let v = fetch_and_serde_json(&base_currency).await;
+    let input_currency = crate::currdb_config_mod::get_input_currency().await;
+    let v = fetch_and_serde_json(&input_currency).await;
     let json_map_string_value = unwrap!(v.as_object());
-    crate::currdb_currency_mod::fill_currency_store(&base_currency, json_map_string_value).await;
+    crate::currdb_currency_mod::fill_currency_store(&input_currency, json_map_string_value).await;
     crate::currdb_config_mod::set_date_fetch(&w::get_now_date()).await;
 }
 
-pub async fn fetch_and_serde_json(base_currency: &str) -> Value {
-    let url = format!(
-        "https://www.floatrates.com/daily/{}.json",
-        base_currency.to_lowercase()
-    );
+pub async fn fetch_and_serde_json(input_currency: &str) -> Value {
+    let url = format!("https://www.floatrates.com/daily/{}.json", input_currency.to_lowercase());
     let resp_body_text = w::fetch_response(&url).await;
     // there is 8 special characters I want to avoid
     let resp_body_text = resp_body_text
@@ -40,7 +37,7 @@ pub async fn fetch_and_serde_json(base_currency: &str) -> Value {
 }
 
 pub async fn modify_rate() {
-    let quote_currency = crate::currdb_config_mod::get_quote_currency().await;
-    let rate = crate::currdb_currency_mod::get_rate(&quote_currency).await;
+    let output_currency = crate::currdb_config_mod::get_output_currency().await;
+    let rate = crate::currdb_currency_mod::get_rate(&output_currency).await;
     crate::currdb_config_mod::set_rate(&rate.to_string()).await;
 }

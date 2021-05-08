@@ -1,6 +1,6 @@
 [package]
 name = "pwa_currency_converter"
-version = "2021.507.1246"
+version = "2021.508.1252"
 authors = ["Luciano Bestia <Luciano.Bestia@gmail.com>"]
 edition = "2018"
 description = "currency converter Progressive Web App"

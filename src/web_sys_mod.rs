@@ -3,7 +3,7 @@
 //! local_storage, session_storage,...
 
 // region: use
-use chrono::{NaiveDate};
+use chrono::NaiveDate;
 use unwrap::unwrap;
 use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen_futures::JsFuture;
@@ -35,10 +35,7 @@ macro_rules! row_on_click {
             $function_ident($element_prefix, $row_number);
         }) as Box<dyn FnMut()>);
 
-        let html_element = crate::web_sys_mod::get_html_element_by_id(&format!(
-            "{}{}",
-            $element_prefix, $row_number
-        ));
+        let html_element = crate::web_sys_mod::get_html_element_by_id(&format!("{}{}", $element_prefix, $row_number));
         html_element.set_onclick(Some(closure.as_ref().unchecked_ref()));
         closure.forget();
     }};
@@ -112,11 +109,7 @@ pub async fn fetch_response(url: &str) -> String {
 
 pub fn get_now_date() -> String {
     let now_js = js_sys::Date::new_0();
-    let now_date = NaiveDate::from_ymd(
-        now_js.get_full_year() as i32,
-        now_js.get_month() + 1,
-        now_js.get_date(),
-    );
+    let now_date = NaiveDate::from_ymd(now_js.get_full_year() as i32, now_js.get_month() + 1, now_js.get_date());
     // return
     now_date.format("%Y-%m-%d").to_string()
 }
