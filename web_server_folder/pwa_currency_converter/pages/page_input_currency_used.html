@@ -18,26 +18,27 @@
             <div id="div_units_title">Select input currency</div>
         </div>
     </div>
-    <div id="div_list_layout" style="position: absolute;width: var(--body_width); top:7vh; display: grid;grid-template-columns: 30%  70%; grid-template-rows: repeat(auto-fill, 7vh);">
-        <!--use as template-->
-        <div class="class_iso_code" id="div_unit_row_number_counter">
-            <!--wt_unit-->EUR</div>
-        <div class="class_currency_name">
-            <!--wt_name-->euro</div>
-        <!--row-->
-        <!--end use as template-->
-        <!--ignore as template-->
-        <div class="class_iso_code">USD</div>
-        <div class="class_currency_name">dollar</div>
+    <div style="position: absolute;top:7vh;width: var(--body_width);">
+        <div id="div_list_layout" style="display: grid;grid-template-columns: 30%  70%; grid-template-rows: repeat(auto-fill, 7vh);">
+            <!--use as template-->
+            <div class="class_iso_code" id="div_unit_row_number_counter">
+                <!--wt_unit-->EUR</div>
+            <div class="class_currency_name">
+                <!--wt_name-->euro</div>
+            <!--row-->
+            <!--end use as template-->
+            <!--ignore as template-->
+            <div class="class_iso_code">USD</div>
+            <div class="class_currency_name">dollar</div>
 
-        <div class="class_iso_code">IRD</div>
-        <div class="class_currency_name">india</div>
-        <!--end ignore as template-->
+            <div class="class_iso_code">IRD</div>
+            <div class="class_currency_name">india</div>
+            <!--end ignore as template-->
+        </div>
+        <div>
+            <p><span class="span_button" id="page_input_currency_used_more">More...</span></p>
+        </div>
     </div>
-    <div>
-        <p><span class="span_button" id="page_input_currency_used_more">More...</span></p>
-    </div>
-
 </body>
 
 </html>

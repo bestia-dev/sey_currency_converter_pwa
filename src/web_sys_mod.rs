@@ -32,7 +32,7 @@ macro_rules! on_click {
 macro_rules! row_on_click {
     ($element_prefix: expr, $row_number: expr, $function_ident: ident) => {{
         let closure = Closure::wrap(Box::new(move || {
-            $function_ident($element_prefix, $row_number);
+            $function_ident($row_number);
         }) as Box<dyn FnMut()>);
 
         let html_element = crate::web_sys_mod::get_html_element_by_id(&format!("{}{}", $element_prefix, $row_number));

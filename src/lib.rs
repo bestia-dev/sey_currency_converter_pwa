@@ -6,6 +6,7 @@ use wasm_bindgen::JsValue;
 
 mod currdb_config_mod;
 mod currdb_currency_mod;
+mod currdb_currency_used_mod;
 mod currdb_manual_rates_mod;
 mod currdb_mod;
 mod fetch_rates_mod;
@@ -40,11 +41,9 @@ pub fn wasm_bindgen_start() -> Result<(), JsValue> {
     spawn_local(async {
         crate::currdb_mod::init_upgrade_currdb().await;
         crate::page_main_mod::page_main().await;
-        let count_of_currency = crate::currdb_currency_mod::db_store_count_item().await;
-        w::debug_write(&format!("count:{}", count_of_currency));
-        // if the database is empty (only one), fetch exchange rates
+        let count_of_currency = crate::currdb_currency_mod::count_item().await;
+        // if the database is empty (only one item), fetch exchange rates
         if count_of_currency <= 1 {
-            w::debug_write("fetch rates on start");
             crate::fetch_rates_mod::fetch_and_save().await;
         }
     });

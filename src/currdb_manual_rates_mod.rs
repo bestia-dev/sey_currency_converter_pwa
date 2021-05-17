@@ -48,9 +48,9 @@ pub fn from_jsvalue(jsvalue: JsValue) -> (String, String, String, f64, String) {
 }
 
 /// put in ObjectStore
-pub async fn put_inside_object_store(
+pub async fn put_object_store_inside_transaction(
     object_store: &idbr::ObjectStoreInsideTransaction,
-    object_store_key: String,
+    object_store_key: &str,
     input_currency: String,
     output_currency: String,
     date: String,
@@ -62,7 +62,7 @@ pub async fn put_inside_object_store(
 }
 
 pub async fn get_rate(object_store_key: &str) -> (String, f64, String) {
-    let db = idbr::Database::use_db(&Databases::Currdb.as_static()).await;
+    let db = idbr::Database::use_db(Databases::Currdb.as_static()).await;
     let jsvalue = db.get_jsvalue(ObjectStores::ManualRates.as_static(), object_store_key).await;
     let (_input_currency, _output_currency, date, rate, description) = from_jsvalue(jsvalue);
     // return

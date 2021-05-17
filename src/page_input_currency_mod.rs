@@ -31,7 +31,7 @@ pub async fn page_input_currency() {
     w::set_inner_html("div_for_wasm_html_injecting", &html_fragment);
 
     // region: binding - read from config
-    w::set_text("div_units_input_currency", &crate::currdb_config_mod::get_input_currency().await);
+
     // endregion: binding - read from config
 
     // region: read from indexed db row by row
@@ -40,7 +40,7 @@ pub async fn page_input_currency() {
     use crate::currdb_mod::{Databases, ObjectStores};
     use crate::idbr_mod as idb;
     use strum::AsStaticRef;
-    let db = idb::Database::use_db(&Databases::Currdb.as_static()).await;
+    let db = idb::Database::use_db(Databases::Currdb.as_static()).await;
     let cursor = db.get_cursor(ObjectStores::Currency.as_static()).await;
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
@@ -71,7 +71,8 @@ pub async fn page_input_currency() {
 
     // handler for every row
     for i in 0..=row_number_counter {
-        row_on_click!("div_unit_", i, unit_on_click);
+        row_on_click!("div_unit_", i, row_cell_on_click);
+        row_on_click!("div_name_", i, row_cell_on_click);
     }
     // endregion: event handlers
 }
@@ -84,12 +85,15 @@ pub fn div_back_on_click(_element_id: &str) {
 }
 
 /// unit is a field in the row of the list
-pub fn unit_on_click(element_prefix: &str, row_number: usize) {
-    let element_id = format!("{}{}", element_prefix, row_number);
+pub fn row_cell_on_click(row_number: usize) {
+    let element_id = format!("div_unit_{}", row_number);
     let input_currency = w::get_text(&element_id);
     spawn_local(async move {
         let input_currency = input_currency.clone();
-        //w::debug_write(&format!("input input_currency: {}", &input_currency));
+        // w::debug_write(&format!("input input_currency: {}", &input_currency));
+        let currency_name = crate::currdb_currency_mod::get_name(&input_currency).await;
+        crate::currdb_currency_used_mod::put_single_item(&input_currency, &currency_name).await;
+        w::debug_write("added to currency_used");
         crate::currdb_config_mod::set_input_currency(&input_currency).await;
         crate::fetch_rates_mod::fetch_and_save().await;
         crate::fetch_rates_mod::modify_rate().await;

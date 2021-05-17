@@ -40,7 +40,7 @@ pub async fn page_output_currency() {
     use crate::currdb_mod::{Databases, ObjectStores};
     use crate::idbr_mod as idb;
     use strum::AsStaticRef;
-    let db = idb::Database::use_db(&Databases::Currdb.as_static()).await;
+    let db = idb::Database::use_db(Databases::Currdb.as_static()).await;
     let cursor = db.get_cursor(ObjectStores::Currency.as_static()).await;
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
@@ -72,7 +72,7 @@ pub async fn page_output_currency() {
 
     // handler for every row
     for i in 0..=row_number_counter {
-        row_on_click!("div_unit_", i, unit_on_click);
+        row_on_click!("div_unit_", i, row_cell_on_click);
     }
     // endregion: event handlers
 }
@@ -85,8 +85,8 @@ pub fn div_back_on_click(_element_id: &str) {
 }
 
 /// unit is a field in the row of the list
-pub fn unit_on_click(element_prefix: &str, row_number: usize) {
-    let element_id = format!("{}{}", element_prefix, row_number);
+pub fn row_cell_on_click(row_number: usize) {
+    let element_id = format!("div_unit_{}", row_number);
     spawn_local(async move {
         //w::debug_write(&format!("element_id: {}", element_id));
         let iso_code = w::get_text(&element_id);

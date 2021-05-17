@@ -31,7 +31,6 @@ pub async fn page_input_currency_used() {
     w::set_inner_html("div_for_wasm_html_injecting", &html_fragment);
 
     // region: binding - read from config
-    w::set_text("div_units_input_currency", &crate::currdb_config_mod::get_input_currency().await);
     // endregion: binding - read from config
 
     // region: read from indexed db row by row
@@ -40,8 +39,8 @@ pub async fn page_input_currency_used() {
     use crate::currdb_mod::{Databases, ObjectStores};
     use crate::idbr_mod as idb;
     use strum::AsStaticRef;
-    let db = idb::Database::use_db(&Databases::Currdb.as_static()).await;
-    let cursor = db.get_cursor(ObjectStores::Currency.as_static()).await;
+    let db = idb::Database::use_db(Databases::Currdb.as_static()).await;
+    let cursor = db.get_cursor(ObjectStores::CurrencyUsed.as_static()).await;
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
     let mut row_number_counter: usize = 0;
@@ -49,7 +48,7 @@ pub async fn page_input_currency_used() {
         let key = cursor.get_key();
         let key: String = unwrap!(serde_wasm_bindgen::from_value(key));
         let value = cursor.get_value();
-        let fields: crate::currdb_currency_mod::ValueStruct = unwrap!(serde_wasm_bindgen::from_value(value));
+        let fields: crate::currdb_currency_used_mod::ValueStruct = unwrap!(serde_wasm_bindgen::from_value(value));
 
         let template_with_data = template.replace("row_number_counter", &row_number_counter.to_string());
 
@@ -67,11 +66,11 @@ pub async fn page_input_currency_used() {
 
     // region: event handlers
     on_click!("div_back", div_back_on_click);
-    on_click!("div_reload_button", div_reload_button_on_click);
+    on_click!("page_input_currency_used_more", page_input_currency_used_more_on_click);
 
     // handler for every row
     for i in 0..=row_number_counter {
-        row_on_click!("div_unit_", i, unit_on_click);
+        row_on_click!("div_unit_", i, row_cell_on_click);
     }
     // endregion: event handlers
 }
@@ -84,8 +83,8 @@ pub fn div_back_on_click(_element_id: &str) {
 }
 
 /// unit is a field in the row of the list
-pub fn unit_on_click(element_prefix: &str, row_number: usize) {
-    let element_id = format!("{}{}", element_prefix, row_number);
+pub fn row_cell_on_click(row_number: usize) {
+    let element_id = format!("div_unit_{}", row_number);
     let input_currency = w::get_text(&element_id);
     spawn_local(async move {
         let input_currency = input_currency.clone();
@@ -97,11 +96,9 @@ pub fn unit_on_click(element_prefix: &str, row_number: usize) {
     });
 }
 
-/// reload json from floatrates.com and save to indexeddb
-pub fn div_reload_button_on_click(_element_id: &str) {
+/// opens the page_input_currency
+fn page_input_currency_used_more_on_click(_element_id: &str) {
     spawn_local(async {
-        crate::fetch_rates_mod::fetch_and_save().await;
-        crate::fetch_rates_mod::modify_rate().await;
-        page_input_currency_used().await;
+        crate::page_input_currency_mod::page_input_currency().await;
     });
 }

@@ -40,7 +40,7 @@ pub async fn page_manual_rates() {
     use crate::currdb_mod::{Databases, ObjectStores};
     use crate::idbr_mod as idb;
     use strum::AsStaticRef;
-    let db = idb::Database::use_db(&Databases::Currdb.as_static()).await;
+    let db = idb::Database::use_db(Databases::Currdb.as_static()).await;
     let cursor = db.get_cursor(ObjectStores::ManualRates.as_static()).await;
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
