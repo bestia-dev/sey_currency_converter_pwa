@@ -125,3 +125,9 @@ export function cursor_key(cursor:idb.IDBPCursorWithValue<unknown, [string], str
 export function cursor_value(cursor:idb.IDBPCursorWithValue<unknown, [string], string, unknown, "readonly">){
     return cursor.value;
 }
+
+export async function db_store_count_item(db_name:string, store_name:string){
+    let db = await use_db(db_name);
+    const my_count = await db.count(store_name);
+    return my_count;
+}

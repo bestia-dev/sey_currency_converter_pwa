@@ -79,3 +79,8 @@ pub async fn get_rate(iso_code: &str) -> f64 {
     // return
     rate
 }
+
+// count items in store
+pub async fn db_store_count_item() -> usize {
+    idbr::db_store_count_item(&Databases::Currdb.as_static(), &ObjectStores::Currency.as_static()).await
+}

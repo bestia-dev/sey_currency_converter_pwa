@@ -23,7 +23,8 @@ extern "C" {
     #[wasm_bindgen(catch)]
     pub(crate) async fn put_key_value(db_name: &str, store_name: &str, key: &str, value: &str, ) -> Result<(), JsValue>;
     pub(crate) async fn get_key_value(db_name: &str, store_name: &str, key: &str, ) -> JsValue;
-    
+    pub(crate) async fn db_store_count_item(db_name: &str, store_name: &str ) -> JsValue;
+
     // region: db
     #[wasm_bindgen(catch)]
     pub(crate) async fn db_put_key_value(db:&JsValue, store_name:&str, key:&str, value:&str) -> Result<(), JsValue>;

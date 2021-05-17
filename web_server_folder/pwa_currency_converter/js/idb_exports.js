@@ -103,4 +103,9 @@ export function cursor_key(cursor) {
 export function cursor_value(cursor) {
     return cursor.value;
 }
+export async function db_store_count_item(db_name, store_name) {
+    let db = await use_db(db_name);
+    const my_count = await db.count(store_name);
+    return my_count;
+}
 //# sourceMappingURL=idb_exports.js.map

@@ -132,21 +132,21 @@ fn convert() {
     });
 }
 
-/// opens the page_input_currency
+/// opens the page_input_currency_used
 fn div_input_unit_on_click(_element_id: &str) {
     spawn_local(async {
-        crate::page_input_currency_mod::page_input_currency().await;
+        crate::page_input_currency_used_mod::page_input_currency_used().await;
     });
 }
 
-/// opens the page_input_currency
+/// opens the page_output_currency
 fn div_output_unit_on_click(_element_id: &str) {
     spawn_local(async {
         crate::page_output_currency_mod::page_output_currency().await;
     });
 }
 
-/// opens the page_input_currency
+/// opens the page_modal_about
 fn div_hamburger_button_on_click(_element_id: &str) {
     spawn_local(async {
         crate::page_modal_about_mod::page_modal_about().await;

@@ -4,6 +4,8 @@
 // Fully rust code and types. All the JsValue are wrapped.
 // It uses the idb javascript library, idb_exports.ts and idbr_imports_mod.rs
 
+use std::usize;
+
 use crate::idbr_imports_mod as idbjs;
 use unwrap::unwrap;
 use wasm_bindgen::prelude::*;
@@ -21,6 +23,15 @@ pub async fn put_key_value(db_name: &str, store_name: &str, key: &str, value: &s
 pub async fn get_key_value(db_name: &str, store_name: &str, key: &str) -> String {
     // return
     unwrap!(idbjs::get_key_value(db_name, store_name, key).await.as_string())
+}
+
+pub async fn db_store_count_item(db_name: &str, store_name: &str) -> usize {
+    // return
+    let js_count = idbjs::db_store_count_item(db_name, store_name).await;
+    let f64_count = unwrap!(js_count.as_f64());
+    let usize_count = f64_count as usize;
+    // return
+    usize_count
 }
 
 // region: Database
