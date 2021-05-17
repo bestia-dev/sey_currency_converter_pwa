@@ -5,14 +5,14 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.508.1252  date: 2021-05-08 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.517.1036  date: 2021-05-17 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1056-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1055-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-82-blue.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-188-purple.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-189-purple.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 
@@ -35,7 +35,7 @@ Use `cargo make` to see the prepared steps for deployment like:
 `$ cargo make release`  
 And then follow the instructions on the screen like:  
 
-- Run the web server in a separate terminal: cd ~/rustprojects/pwa_currency_converter/web_server_folder/;basic-http-server  
+- Run the web server in a separate terminal: `cd ~/rustprojects/pwa_currency_converter/web_server_folder/;basic-http-server`  
 - Run the web app in your browser: <http://127.0.0.1:4000/pwa_currency_converter/>  
 
 Oh, today I did everything right, but the browser said "This site can't be reached". After many attempts I discovered, that WSL2 `localhost` or `127.0.0.1` connection to Win10 is broken after putting the laptop to sleep. I have to restart the WSL in PowerShell Run as administrator with  
@@ -157,6 +157,8 @@ This PWA will have more pages. Pages are complete static html files inside tha /
 It is easy to edit and preview pages because they are complete.  
 The rust code will fetch the html, extract only the body content and set_inner_html to div_for_wasm_html_injecting.  
 A page is a template, and some placeholders will be replaced with data.  
+For `modal pages` I prepared a separate `div_for_modal`.  
+I will not use a local router and will not change the URL address of this `single page web app`. I don't see a need for this.  
 
 ## serde-wasm-bindgen
 
@@ -167,4 +169,3 @@ From Rust to javascript:
 `serde_wasm_bindgen::to_value(&some_supported_rust_value)`  
 From javascript to rust:  
 `let value: SomeSupportedRustType = serde_wasm_bindgen::from_value(value)?;`  
-

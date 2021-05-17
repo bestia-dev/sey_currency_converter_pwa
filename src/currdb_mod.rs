@@ -2,7 +2,7 @@
 
 // Specific code for work with the `currdb` database
 
-use std::fmt::format;
+//use std::fmt::format;
 
 use crate::idbr_mod as idb;
 use crate::web_sys_mod as w;
