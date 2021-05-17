@@ -1,6 +1,6 @@
 // pwa_currency_converter lib.rs
 
-//use unwrap::unwrap;
+use unwrap::unwrap;
 use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsValue;
 
@@ -30,6 +30,9 @@ pub fn wasm_bindgen_start() -> Result<(), JsValue> {
     console_error_panic_hook::set_once();
     // write the app version just for debug purposes
     w::debug_write(&format!("pwa_currency_converter v{}", env!("CARGO_PKG_VERSION")));
+    // set the window initial size (only on desktop)
+    unwrap!(w::window().resize_to(360, 640));
+
     crate::idbr_mod::check_browser_capability();
 
     //async block

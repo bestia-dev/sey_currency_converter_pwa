@@ -9,7 +9,9 @@
         "idbx",
         "idxdb",
         "nodesource",
+        "notranslate",
         "osit",
+        "overscroll",
         "readwrite",
         "transpilation"
     ]

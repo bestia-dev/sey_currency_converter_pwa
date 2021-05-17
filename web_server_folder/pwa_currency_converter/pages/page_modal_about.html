@@ -16,6 +16,14 @@
         <div class="w3_modal_content" style="width: var(--body_width)">
             <div class="w3-container" style="width: var(--body_width)">
                 <h2>About</h2>
+                <p><span class="span_button" id="modal_about_share" onclick="
+                    // web_sys does not contain navigator.share() yet 2021-05-17                 
+                    navigator.share({
+                        title: 'pwa_currency_converter',
+                        text: 'currency converter Progressive Web App',
+                        url: 'https://bestia.dev/pwa_currency_converter/',
+                    });                   
+                ">Share</span></p>
                 <p>Open source project on github:</p>
                 <p><a href="https://github.com/LucianoBestia/pwa_currency_converter" target="_blank">pwa_currency_converter</a></p>
                 <p>This PWA app is made for mobile browsers in portrait orientation.</p>

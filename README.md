@@ -5,12 +5,12 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.517.1036  date: 2021-05-17 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.517.1343  date: 2021-05-17 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1055-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1058-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-82-blue.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-189-purple.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
@@ -19,6 +19,18 @@
 [comment]: # (lmake_lines_of_code end)
 
 [![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/pwa_currency_converter/blob/master/LICENSE) [![Rust](https://github.com/LucianoBestia/pwa_currency_converter/workflows/RustAction/badge.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+
+## PWA
+
+PWA stands for `Progressive Web Application`.  
+It is a 2015 web browser standard that allows web pages to be used like native applications.  
+The major benefits are:  
+  
+- the browser is sand-boxing the app for security (no access to the local file system or other sensitive data, impossible to add viruses, malware or ransomware)  
+- web apps are cross-platform and cross-browser (write once, run everywhere on all modern browsers: desktop and mobile)
+- standard web technologies: HTML, CSS, javascript and WASM. (I code in Rust and than compile to WASM)
+- easy of install and update (it is just a web page with some added functionality for performance and usability)  
+- good performance  
 
 ## Currency exchange rates
 
@@ -43,6 +55,7 @@ Oh, today I did everything right, but the browser said "This site can't be reach
 Not nice and very difficult to discover because WSL2 is running just fine, except this.  
 
 In the browser (chrome, edge, firefox) use F12 developer tools to easily see the content of indexeddb in F12. Very convenient.  
+Some tips for PWA: <https://firt.dev/pwa-design-tips/>  
 
 ## indexeddb
 

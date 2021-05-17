@@ -50,7 +50,7 @@
             "purpose": "any maskable"
         }
     ],
-    "start_url": "",
+    "start_url": "/pwa_currency_converter/index.html",
     "background_color": "#000000",
     "display": "standalone",
     "orientation": "portrait",
