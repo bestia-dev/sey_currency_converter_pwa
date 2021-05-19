@@ -1,8 +1,12 @@
 // idbr_mod.rs
+#![allow(dead_code)]
 
 // Objects and method to work with indexeddb.
 // Fully rust code and types. All the JsValue are wrapped.
 // It uses the idb javascript library, idb_exports.ts and idbr_imports_mod.rs
+// There are 4 objects: Database, Transaction, ObjectStoreInsideTransaction and Cursor
+// The long way to do anything is: open database, open transaction, open object_store and then do something.
+// It is really long when you want just to change one single value. To help with this there are a few 'shortcut functions'.
 
 use std::usize;
 
@@ -15,14 +19,17 @@ pub fn check_browser_capability() {
     idbjs::check_browser_capability();
 }
 
-pub async fn put_key_value(db_name: &str, store_name: &str, key: &str, value: &str) -> Result<(), JsValue> {
+// region: shortcut functions
+// returns JsValue
+pub async fn get_key_value(db_name: &str, store_name: &str, key: &str) -> JsValue {
     // return
-    idbjs::put_key_value(db_name, store_name, key, value).await
+    idbjs::get_key_value(db_name, store_name, key).await
 }
 
-pub async fn get_key_value(db_name: &str, store_name: &str, key: &str) -> String {
+// put JsValue
+pub async fn put_key_value(db_name: &str, store_name: &str, key: &str, value: &JsValue) -> Result<(), JsValue> {
     // return
-    unwrap!(idbjs::get_key_value(db_name, store_name, key).await.as_string())
+    idbjs::put_key_value(db_name, store_name, key, value).await
 }
 
 pub async fn db_store_count_item(db_name: &str, store_name: &str) -> usize {
@@ -33,6 +40,7 @@ pub async fn db_store_count_item(db_name: &str, store_name: &str) -> usize {
     // return
     usize_count
 }
+// endregion: shortcut functions
 
 // region: Database
 pub struct Database {
@@ -49,14 +57,11 @@ impl Database {
         Database { db }
     }
     pub fn create_object_store(&self, store_name: &str) {
-        idbjs::create_object_store(self.db.clone(), store_name);
+        idbjs::create_object_store(&self.db, store_name);
     }
     pub fn transaction_open(&self) -> Transaction {
         let tx = idbjs::transaction_open(&self.db);
         Transaction::from(tx)
-    }
-    pub async fn put_key_value(&self, store_name: &str, key: &str, value: &str) -> Result<(), JsValue> {
-        idbjs::db_put_key_value(&self.db, store_name, key, value).await
     }
     pub async fn get_cursor(&self, store_name: &str) -> Cursor {
         let cursor = idbjs::cursor(&self.db, store_name).await;
@@ -66,6 +71,9 @@ impl Database {
     pub async fn get_jsvalue(&self, store_name: &str, key: &str) -> JsValue {
         // return
         idbjs::db_get_jsvalue(&self.db, store_name, key).await
+    }
+    pub async fn put_key_value(&self, store_name: &str, key: &str, value: &str) -> Result<(), JsValue> {
+        idbjs::db_put_key_value(&self.db, store_name, key, value).await
     }
 }
 /// Database from JsValue
@@ -121,11 +129,11 @@ pub struct ObjectStoreInsideTransaction {
     tx_ob_st: JsValue,
 }
 impl ObjectStoreInsideTransaction {
-    pub fn put(&self, key: &str, value: &str) {
-        idbjs::transaction_object_store_put(self.tx_ob_st.clone(), key, value);
+    pub async fn get_jsvalue(&self, key: &str) -> JsValue {
+        idbjs::transaction_object_store_get_jsvalue(&self.tx_ob_st, key).await
     }
     pub fn put_jsvalue(&self, key: &str, value: &JsValue) {
-        idbjs::transaction_object_store_put_jsvalue(self.tx_ob_st.clone(), key, value);
+        idbjs::transaction_object_store_put_jsvalue(&self.tx_ob_st, key, value);
     }
 }
 /// ObjectStoreInsideTransaction from JsValue

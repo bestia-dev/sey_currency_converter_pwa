@@ -11,9 +11,8 @@ use wasm_bindgen_futures::spawn_local;
 
 use crate::on_click;
 //use crate::row_on_click;
-use crate::web_sys_mod as w;
-//use crate::idbr_mod;
 use crate::utils_mod as ut;
+use crate::web_sys_mod as w;
 
 /// fetch and inject HTML fragment into index.html/div_for_wasm_html_injecting
 pub async fn page_manual_rates() {
@@ -37,11 +36,7 @@ pub async fn page_manual_rates() {
     // region: read from indexed db row by row
     let mut html_list = String::with_capacity(1000);
     // repeat the template with data from indexed db in template inside div_list_layout
-    use crate::currdb_mod::{Databases, ObjectStores};
-    use crate::idbr_mod as idb;
-    use strum::AsStaticRef;
-    let db = idb::Database::use_db(Databases::Currdb.as_static()).await;
-    let cursor = db.get_cursor(ObjectStores::ManualRates.as_static()).await;
+    let cursor = crate::currdb_mod::get_cursor(&crate::currdb_mod::ObjectStores::ManualRates).await;
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
     let mut row_number_counter: usize = 0;

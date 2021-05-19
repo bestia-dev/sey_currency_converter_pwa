@@ -1,6 +1,7 @@
 // web_sys_mod.rs
 //! helper functions for web_sys, window, document, dom, console,
 //! local_storage, session_storage,...
+#![allow(dead_code)]
 
 // region: use
 use chrono::NaiveDate;
@@ -32,11 +33,26 @@ macro_rules! on_click {
 macro_rules! row_on_click {
     ($element_prefix: expr, $row_number: expr, $function_ident: ident) => {{
         let closure = Closure::wrap(Box::new(move || {
-            $function_ident($row_number);
+            $function_ident($element_prefix, $row_number);
         }) as Box<dyn FnMut()>);
 
         let html_element = crate::web_sys_mod::get_html_element_by_id(&format!("{}{}", $element_prefix, $row_number));
         html_element.set_onclick(Some(closure.as_ref().unchecked_ref()));
+        closure.forget();
+    }};
+}
+
+/// Simple macro to set listener of onkeyup events to an element_id.
+/// on_keyup!("regex_text", run_regex)
+#[macro_export]
+macro_rules! on_keyup {
+    ($element_id: expr, $function_ident: ident) => {{
+        let closure = Closure::wrap(Box::new(move || {
+            $function_ident($element_id);
+        }) as Box<dyn FnMut()>);
+
+        let html_element = crate::web_sys_mod::get_html_element_by_id($element_id);
+        html_element.set_onkeyup(Some(closure.as_ref().unchecked_ref()));
         closure.forget();
     }};
 }
@@ -68,6 +84,17 @@ pub fn get_html_element_by_id(element_id: &str) -> web_sys::HtmlElement {
 pub fn debug_write(text: &str) {
     // writing to the console
     console::log_1(&JsValue::from_str(text));
+}
+
+/// timestamp with milliseconds
+pub fn now_performance_millisecond() -> f64 {
+    web_sys::window().expect("should have a Window").performance().expect("should have a Performance").now()
+}
+
+/// debug write the duration of code execution
+pub fn debug_duration(text: &str, start: f64) {
+    let in_milli = now_performance_millisecond() - start;
+    debug_write(&format!("{}: {} ms", text, in_milli));
 }
 
 /// get text from element_id
@@ -112,4 +139,18 @@ pub fn get_now_date() -> String {
     let now_date = NaiveDate::from_ymd(now_js.get_full_year() as i32, now_js.get_month() + 1, now_js.get_date());
     // return
     now_date.format("%Y-%m-%d").to_string()
+}
+
+/// get input html element by id
+pub fn get_input_html_element_by_id(element_id: &str) -> web_sys::HtmlInputElement {
+    let element = get_element_by_id(element_id);
+    let html_input_element = unwrap!(element.dyn_into::<web_sys::HtmlInputElement>());
+    //return
+    html_input_element
+}
+
+/// get input element value string by id
+pub fn get_input_element_value_string_by_id(element_id: &str) -> String {
+    let input_html_element = get_input_html_element_by_id(element_id);
+    input_html_element.value()
 }

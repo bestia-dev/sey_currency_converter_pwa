@@ -19,6 +19,27 @@ export function check_browser_capability(){
     }
 }
 
+//#region shortcut functions
+/// get key-value in a store 
+export async function get_key_value(db_name:string, store:string, key:string){
+    let db = await use_db(db_name);
+    const value = await db.get(store, key);
+    return value;
+}
+/// put key-value in a store (upsert)
+export async function put_key_value(db_name:string, store:string, key:string, value:any){
+    let db = await use_db(db_name);
+    db.put(store, value, key);
+}
+export async function db_store_count_item(db_name:string, store_name:string){
+    let db = await use_db(db_name);
+    const my_count = await db.count(store_name);
+    return my_count;
+}
+//#endregion shortcut functions
+
+//#region db
+
 /// Init db with upgrade (passed as function name), returns a promise
 /// It must be the first command for indexeddb and it must have enough time to upgrade before later commands.
 export async function init_upgrade_db(db_name:string, version:number, rust_closure_for_upgrade:any) {
@@ -30,18 +51,39 @@ export async function init_upgrade_db(db_name:string, version:number, rust_closu
     });
     return db;
 }
-
+/// use_db returns a promise. 
+/// I hope this is fast, because I call it often.
+/// I hope it is reused and don't makes millions of unclosed db objects in memory.
+export async function use_db(db_name:string) {
+    let db = await idb.openDB(db_name);
+    return db;
+}
+/// create object store
+export async function create_object_store(db:idb.IDBPDatabase,store_name:string) {
+    db.createObjectStore(store_name);
+}
+/// open transaction
+export function transaction_open(db:idb.IDBPDatabase){
+    // this transaction will block all stores in the database
+    const tx = db.transaction((<any>db.objectStoreNames),'readwrite');
+    return tx;
+}
+export async function cursor(db:idb.IDBPDatabase<unknown>, store_name:string){
+    let cursor = await db.transaction(store_name).store.openCursor();
+    return cursor;
+}
 /// get key-value in a store 
 export async function db_get_jsvalue(db:idb.IDBPDatabase, store:string, key:string){
     const value = await db.get(store, key);
     return value;
 }
-
-/// create object store
-export async function create_object_store(db:idb.IDBPDatabase,store_name:string) {
-    db.createObjectStore(store_name);
+/// put key-value in a store (upsert)
+export async function db_put_key_value(db:idb.IDBPDatabase<unknown>, store:string, key:string, value:string){
+    db.put(store, value, key);
 }
+//#endregion db
 
+//#region transaction
 /// get object store from transaction versionchange
 export function get_object_store_from_transaction_versionchange(tx:idb.IDBPTransaction<unknown, string[], "versionchange">,store_name:string) {
     let object_store = tx.objectStore(store_name);
@@ -53,66 +95,25 @@ export function get_object_store_from_transaction_readwrite(tx:idb.IDBPTransacti
     let object_store = tx.objectStore(store_name);
     return object_store;
 }
-
-// put inside a transaction_object_store
-export function transaction_object_store_put(tx_ob_st: any, key:string, value:string) {
-    tx_ob_st.put(value,key);
-}
-
-// put inside a transaction_object_store
-export function transaction_object_store_put_jsvalue(tx_ob_st: any, key:string, value:any) {
-    tx_ob_st.put(value,key);
-}
-
-/// use_db returns a promise. 
-/// I hope this is fast, because I call it often.
-/// I hope it is reused and don't makes millions of unclosed db objects in memory.
-export async function use_db(db_name:string) {
-    let db = await idb.openDB(db_name);
-    return db;
-}
-
-/// add key-value in a store
-export async function add_key_value(db_name:string, store:string, key:string, value:string){
-    let db = await use_db(db_name);
-    db.add(store, value, key);
-}
-
-/// put key-value in a store (upsert)
-export async function put_key_value(db_name:string, store:string, key:string, value:string){
-    let db = await use_db(db_name);
-    db.put(store, value, key);
-}
-
-/// get key-value in a store 
-export async function get_key_value(db_name:string, store:string, key:string){
-    let db = await use_db(db_name);
-    const value = await db.get(store, key);
-    return value;
-}
-
-/// open transaction
-export function transaction_open(db:idb.IDBPDatabase){
-    // this transaction will block all stores in the database
-    const tx = db.transaction((<any>db.objectStoreNames),'readwrite');
-    return tx;
-}
-
 /// close transaction
 export async function transaction_close(tx:idb.IDBPTransaction<unknown, [string], "readwrite">){
     await tx.done;
 }
+//#endregion transaction
 
-/// put key-value in a store (upsert)
-export async function db_put_key_value(db:idb.IDBPDatabase<unknown>, store:string, key:string, value:string){
-    db.put(store, value, key);
+//#region object store
+// get inside a transaction_object_store
+export async function transaction_object_store_get_jsvalue(tx_ob_st:idb.IDBPObjectStore, key:string) {
+    const value = await tx_ob_st.get(key);
+    return value;    
 }
-
-export async function cursor(db:idb.IDBPDatabase<unknown>, store_name:string){
-    let cursor = await db.transaction(store_name).store.openCursor();
-    return cursor;
+// put inside a transaction_object_store
+export function transaction_object_store_put_jsvalue(tx_ob_st: any, key:string, value:any) {
+    tx_ob_st.put(value,key);
 }
+//#endregion object store
 
+//#region cursor
 export async function cursor_continue(cursor:idb.IDBPCursorWithValue<unknown, [string], string, unknown, "readonly">){
     let new_cursor_or_null = await cursor.continue();
     return new_cursor_or_null;
@@ -125,9 +126,4 @@ export function cursor_key(cursor:idb.IDBPCursorWithValue<unknown, [string], str
 export function cursor_value(cursor:idb.IDBPCursorWithValue<unknown, [string], string, unknown, "readonly">){
     return cursor.value;
 }
-
-export async function db_store_count_item(db_name:string, store_name:string){
-    let db = await use_db(db_name);
-    const my_count = await db.count(store_name);
-    return my_count;
-}
+//#endregion

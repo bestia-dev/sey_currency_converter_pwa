@@ -9,11 +9,11 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::spawn_local;
 
+use crate::currdb_mod as db;
 use crate::on_click;
 use crate::row_on_click;
-use crate::web_sys_mod as w;
-//use crate::idbr_mod;
 use crate::utils_mod as ut;
+use crate::web_sys_mod as w;
 
 /// fetch and inject HTML fragment into index.html/div_for_wasm_html_injecting
 pub async fn page_input_currency_used() {
@@ -36,11 +36,7 @@ pub async fn page_input_currency_used() {
     // region: read from indexed db row by row
     let mut html_list = String::with_capacity(1000);
     // repeat the template with data from indexed db in template inside div_list_layout
-    use crate::currdb_mod::{Databases, ObjectStores};
-    use crate::idbr_mod as idb;
-    use strum::AsStaticRef;
-    let db = idb::Database::use_db(Databases::Currdb.as_static()).await;
-    let cursor = db.get_cursor(ObjectStores::CurrencyUsed.as_static()).await;
+    let cursor = crate::currdb_mod::get_cursor(&db::ObjectStores::CurrencyUsed).await;
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
     let mut row_number_counter: usize = 0;
@@ -71,6 +67,7 @@ pub async fn page_input_currency_used() {
     // handler for every row
     for i in 0..=row_number_counter {
         row_on_click!("div_unit_", i, row_cell_on_click);
+        row_on_click!("div_name_", i, row_cell_on_click);
     }
     // endregion: event handlers
 }
@@ -83,7 +80,7 @@ pub fn div_back_on_click(_element_id: &str) {
 }
 
 /// unit is a field in the row of the list
-pub fn row_cell_on_click(row_number: usize) {
+pub fn row_cell_on_click(_element_prefix: &str, row_number: usize) {
     let element_id = format!("div_unit_{}", row_number);
     let input_currency = w::get_text(&element_id);
     spawn_local(async move {

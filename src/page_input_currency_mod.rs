@@ -9,11 +9,23 @@ use wasm_bindgen::prelude::*;
 use wasm_bindgen::JsCast;
 use wasm_bindgen_futures::spawn_local;
 
+use lazy_static::lazy_static;
+use std::sync::Mutex;
+
+// region: use macros
+
 use crate::on_click;
+use crate::on_keyup;
 use crate::row_on_click;
-use crate::web_sys_mod as w;
-//use crate::idbr_mod;
+// endregion: use macros
+
+use crate::currdb_mod as db;
 use crate::utils_mod as ut;
+use crate::web_sys_mod as w;
+
+lazy_static! {
+    static ref TEMPLATE: Mutex<String> = Mutex::new(String::new());
+}
 
 /// fetch and inject HTML fragment into index.html/div_for_wasm_html_injecting
 pub async fn page_input_currency() {
@@ -23,6 +35,9 @@ pub async fn page_input_currency() {
     let (html_fragment, _new_pos_cursor) = unwrap!(ut::get_delimited_text(&resp_body_text, 0, "<body>", "</body>"));
     // get template
     let (template, _new_pos_cursor) = unwrap!(ut::get_delimited_text(&html_fragment, 0, "<!--use as template-->", "<!--end use as template-->",));
+    //store it once in a global variable for later use
+    TEMPLATE.lock().unwrap().truncate(0);
+    TEMPLATE.lock().unwrap().push_str(&template);
     // remove template from html_fragment
     let html_fragment = ut::get_text_without_delimited_fragment(&html_fragment, 0, "<!--use as template-->", "<!--end use as template-->");
     // remove ignore as template
@@ -35,13 +50,19 @@ pub async fn page_input_currency() {
     // endregion: binding - read from config
 
     // region: read from indexed db row by row
-    let mut html_list = String::with_capacity(1000);
+
     // repeat the template with data from indexed db in template inside div_list_layout
-    use crate::currdb_mod::{Databases, ObjectStores};
-    use crate::idbr_mod as idb;
-    use strum::AsStaticRef;
-    let db = idb::Database::use_db(Databases::Currdb.as_static()).await;
-    let cursor = db.get_cursor(ObjectStores::Currency.as_static()).await;
+
+    let cursor = crate::currdb_mod::get_cursor(&crate::currdb_mod::ObjectStores::Currency).await;
+    div_list_set(cursor, &template, "").await;
+
+    // region: event handlers
+    on_click!("div_back", div_back_on_click);
+    on_click!("div_search_button", div_search_button_on_click);
+}
+
+async fn div_list_set(cursor: db::Cursor, template: &str, search_str: &str) {
+    let mut html_list = String::with_capacity(1000);
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
     let mut row_number_counter: usize = 0;
@@ -50,27 +71,25 @@ pub async fn page_input_currency() {
         let key: String = unwrap!(serde_wasm_bindgen::from_value(key));
         let value = cursor.get_value();
         let fields: crate::currdb_currency_mod::ValueStruct = unwrap!(serde_wasm_bindgen::from_value(value));
+        let search_str = &search_str.to_ascii_lowercase();
+        if search_str.is_empty() || key.to_ascii_lowercase().contains(search_str) || fields.name.to_ascii_lowercase().contains(search_str) {
+            let template_with_data = template.replace("row_number_counter", &row_number_counter.to_string());
 
-        let template_with_data = template.replace("row_number_counter", &row_number_counter.to_string());
+            let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_unit", &key);
+            let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_name", &fields.name);
 
-        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_unit", &key);
-        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_name", &fields.name);
+            html_list.push_str(&template_with_data);
 
-        html_list.push_str(&template_with_data);
+            row_number_counter += 1;
+        }
         if cursor.next().await.is_none() {
             break;
         }
-        row_number_counter += 1;
     }
     // region: read from indexed db row by row
     w::set_inner_html("div_list_layout", &html_list);
-
-    // region: event handlers
-    on_click!("div_back", div_back_on_click);
-    on_click!("div_reload_button", div_reload_button_on_click);
-
     // handler for every row
-    for i in 0..=row_number_counter {
+    for i in 0..row_number_counter {
         row_on_click!("div_unit_", i, row_cell_on_click);
         row_on_click!("div_name_", i, row_cell_on_click);
     }
@@ -85,7 +104,7 @@ pub fn div_back_on_click(_element_id: &str) {
 }
 
 /// unit is a field in the row of the list
-pub fn row_cell_on_click(row_number: usize) {
+pub fn row_cell_on_click(_element_prefix: &str, row_number: usize) {
     let element_id = format!("div_unit_{}", row_number);
     let input_currency = w::get_text(&element_id);
     spawn_local(async move {
@@ -93,7 +112,7 @@ pub fn row_cell_on_click(row_number: usize) {
         // w::debug_write(&format!("input input_currency: {}", &input_currency));
         let currency_name = crate::currdb_currency_mod::get_name(&input_currency).await;
         crate::currdb_currency_used_mod::put_single_item(&input_currency, &currency_name).await;
-        w::debug_write("added to currency_used");
+        //w::debug_write("added to currency_used");
         crate::currdb_config_mod::set_input_currency(&input_currency).await;
         crate::fetch_rates_mod::fetch_and_save().await;
         crate::fetch_rates_mod::modify_rate().await;
@@ -101,11 +120,25 @@ pub fn row_cell_on_click(row_number: usize) {
     });
 }
 
-/// reload json from floatrates.com and save to indexeddb
-pub fn div_reload_button_on_click(_element_id: &str) {
+pub fn div_search_button_on_click(_element_id: &str) {
     spawn_local(async {
-        crate::fetch_rates_mod::fetch_and_save().await;
-        crate::fetch_rates_mod::modify_rate().await;
-        page_input_currency().await;
+        // put an input box instead of div_units_title and put focus there
+        let html_fragment = r#"<input type="text" id="input_search" size="5" ></input>"#;
+        w::set_inner_html("div_units_title", &html_fragment);
+        w::set_inner_html("div_search_button", "×");
+        on_keyup!("input_search", input_search_on_keyup);
+        unwrap!(w::get_html_element_by_id("input_search").focus());
+    });
+}
+
+pub fn input_search_on_keyup(_element_id: &str) {
+    spawn_local(async {
+        // show only filtered currencies
+        // the original template in global variable
+        let cursor = crate::currdb_mod::get_cursor(&crate::currdb_mod::ObjectStores::Currency).await;
+        let template = TEMPLATE.lock().unwrap().clone();
+        let search_str = w::get_input_element_value_string_by_id("input_search");
+        //w::debug_write(&search_str);
+        div_list_set(cursor, &template, &search_str).await;
     });
 }

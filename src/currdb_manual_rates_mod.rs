@@ -3,14 +3,15 @@
 
 // the store manual_rates in indexeddb database currdb
 
-use crate::currdb_mod::{Databases, ObjectStores};
-use crate::idbr_mod as idbr;
+use crate::currdb_mod as db;
 //use crate::web_sys_mod as w;
 use serde::{Deserialize, Serialize};
 //use serde_json::{Map, Value};
 use strum::AsStaticRef;
 //use unwrap::unwrap;
 use wasm_bindgen::JsValue;
+
+static THIS_OBJECT_STORE: &crate::currdb_mod::ObjectStores = &crate::currdb_mod::ObjectStores::Config;
 
 #[derive(Serialize, Deserialize)]
 /// fields in the value column of key-value manual_rates
@@ -20,6 +21,14 @@ pub struct ValueStruct {
     pub date: String,
     pub rate: f64,
     pub description: String,
+}
+
+pub fn create_store_and_init(db: &db::Database, tx: &db::Transaction) {
+    db.create_object_store(THIS_OBJECT_STORE.as_static());
+    let currency_object_store = tx.get_object_store_versionchange(THIS_OBJECT_STORE.as_static());
+    let jsvalue = crate::currdb_manual_rates_mod::to_jsvalue("USD".to_owned(), "USD".to_owned(), "2021-01-01".to_owned(), 1.0, "manual".to_owned());
+    let key = &format!("{}-{}-{}", "USD", "USD", "manual");
+    currency_object_store.put_jsvalue(key, &jsvalue);
 }
 
 pub fn to_jsvalue(input_currency: String, output_currency: String, date: String, rate: f64, description: String) -> JsValue {
@@ -49,7 +58,7 @@ pub fn from_jsvalue(jsvalue: JsValue) -> (String, String, String, f64, String) {
 
 /// put in ObjectStore
 pub async fn put_object_store_inside_transaction(
-    object_store: &idbr::ObjectStoreInsideTransaction,
+    object_store: &db::ObjectStoreInsideTransaction,
     object_store_key: &str,
     input_currency: String,
     output_currency: String,
@@ -62,8 +71,7 @@ pub async fn put_object_store_inside_transaction(
 }
 
 pub async fn get_rate(object_store_key: &str) -> (String, f64, String) {
-    let db = idbr::Database::use_db(Databases::Currdb.as_static()).await;
-    let jsvalue = db.get_jsvalue(ObjectStores::ManualRates.as_static(), object_store_key).await;
+    let jsvalue = crate::currdb_mod::get_key_value(&THIS_OBJECT_STORE, object_store_key).await;
     let (_input_currency, _output_currency, date, rate, description) = from_jsvalue(jsvalue);
     // return
     (date, rate, description)
