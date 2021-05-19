@@ -5,7 +5,7 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.519.1428  date: 2021-05-19 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.519.1431  date: 2021-05-19 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 

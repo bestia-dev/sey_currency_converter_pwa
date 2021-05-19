@@ -11,7 +11,7 @@ use strum::AsStaticRef;
 //use unwrap::unwrap;
 use wasm_bindgen::JsValue;
 
-static THIS_OBJECT_STORE: &crate::currdb_mod::ObjectStores = &crate::currdb_mod::ObjectStores::Config;
+static THIS_OBJECT_STORE: &crate::currdb_mod::ObjectStores = &crate::currdb_mod::ObjectStores::ManualRates;
 
 #[derive(Serialize, Deserialize)]
 /// fields in the value column of key-value manual_rates
