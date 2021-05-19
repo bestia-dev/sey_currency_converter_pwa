@@ -182,3 +182,30 @@ From Rust to javascript:
 `serde_wasm_bindgen::to_value(&some_supported_rust_value)`  
 From javascript to rust:  
 `let value: SomeSupportedRustType = serde_wasm_bindgen::from_value(value)?;`  
+
+## Currdb
+
+IndexedDB can have more than one database at once. In this project I use only one: `Currdb`.  
+My module `idbr_mod` contains all the necessary functions to operate with indexeddb. But it is all too generic. I don't want everywhere in my code to call a generic library. I want to isolate it.  
+For that I created the module `currdb_mod` and encapsulated all the necessary functions for this database. I also re-exported some structs from the `idbr_mod`.  
+My code must use only this module for any database need.  
+For every `ObjectStore` I created its own module to make things more easy to separate and encapsulate.  
+<details>
+  <summary>plantuml diagram</summary>
+
+```plantuml
+@startuml
+[currdb_manual_rates_mod] ..> [currdb_mod]
+[currdb_currency_used_mod] ..> [currdb_mod]
+[currdb_currency_mod] ..> [currdb_mod]
+[currdb_config_mod] ..> [currdb_mod]
+[currdb_mod] ..> [idbr_mod]
+
+note right of (idbr_mod): I want to isolate this generic library
+note right of (currdb_mod): encapsulates all functions for db work
+@enduml
+  ```
+</details>  
+![currdb_diagram](images/currdb_diagram.svg)  
+
+A lot of functions are just public functions in a module. But for some I created objects with methods. It is a mix depending what is easier to write and maybe better for performance.  I didn't use the `Static methods` (methods without self as opposed to `instance methods`) here because the `module` is already a good container for functions encapsulation.  
