@@ -205,7 +205,9 @@ note right of (idbr_mod): I want to isolate this generic library
 note right of (currdb_mod): encapsulates all functions for db work
 @enduml
   ```
+
 </details>  
+
 ![currdb_diagram](images/currdb_diagram.svg)  
 
 A lot of functions are just public functions in a module. But for some I created objects with methods. It is a mix depending what is easier to write and maybe better for performance.  I didn't use the `Static methods` (methods without self as opposed to `instance methods`) here because the `module` is already a good container for functions encapsulation.  
