@@ -39,6 +39,7 @@ pub async fn page_input_currency_used() {
     let cursor = crate::currdb_mod::get_cursor(&db::ObjectStores::CurrencyUsed).await;
     // I cannot implement the iterator trait because it is sync, but I need async
     // a simple loop will be enough
+    let mut js_cmd = String::from("console.log('activate swipe');\n");
     let mut row_number_counter: usize = 0;
     loop {
         let key = cursor.get_key();
@@ -47,6 +48,10 @@ pub async fn page_input_currency_used() {
         let fields: crate::currdb_currency_used_mod::ValueStruct = unwrap!(serde_wasm_bindgen::from_value(value));
 
         let template_with_data = template.replace("row_number_counter", &row_number_counter.to_string());
+        js_cmd.push_str(&format!(
+            "window.mySwipe{} = new Swipe(document.getElementById('slider_{}'));\n",
+            row_number_counter, row_number_counter
+        ));
 
         let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_unit", &key);
         let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_name", &fields.name);
@@ -59,13 +64,10 @@ pub async fn page_input_currency_used() {
     }
     // region: read from indexed db row by row
     w::set_inner_html("div_list_layout", &html_list);
+    // run javascript to activate slide
+    unwrap!(js_sys::eval(&js_cmd));
 
     // region: event handlers
-    let js_cmd = "console.log('swipe');
-    window.mySwipe = new Swipe(document.getElementById('slider'));
-    ";
-    unwrap!(js_sys::eval(js_cmd));
-
     on_click!("div_back", div_back_on_click);
     on_click!("page_input_currency_used_more", page_input_currency_used_more_on_click);
 

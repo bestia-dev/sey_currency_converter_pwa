@@ -128,7 +128,7 @@ dependencies = [
 
 [[package]]
 name = "pwa_currency_converter"
-version = "2021.520.1227"
+version = "2021.520.1357"
 dependencies = [
  "chrono",
  "console_error_panic_hook",

@@ -5,14 +5,14 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.520.1227  date: 2021-05-20 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.520.1357  date: 2021-05-20 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1344-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1341-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-94-blue.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-267-purple.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-268-purple.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 
@@ -211,3 +211,10 @@ note right of (currdb_mod): encapsulates all functions for db work
 ![currdb_diagram](images/currdb_diagram.svg)  
 
 A lot of functions are just public functions in a module. But for some I created objects with methods. It is a mix depending what is easier to write and maybe better for performance.  I didn't use the `Static methods` (methods without self as opposed to `instance methods`) here because the `module` is already a good container for functions encapsulation.  
+
+## Swipe
+
+The `Swipe gesture` is not a native html5 event. It is pretty complicated to recognize this gesture. Even more on different browsers (Safari).  
+Therefore I use this javascript library: <https://github.com/lyfeyaj/swipe>  
+I added this library also to the static html page, for easy of development. But the code in rust uses it in a different manner.  
+For now I need to replace the row counter.  I plan to use also a callback from javascript back to rust to execute the remove and reopen the same page.  
