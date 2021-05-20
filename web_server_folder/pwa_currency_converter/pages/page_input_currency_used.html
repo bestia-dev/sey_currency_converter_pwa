@@ -8,6 +8,7 @@
     <meta name="viewport" content="width = device-width,initial-scale = 1.0" />
     <link rel="stylesheet" href="../css/normalize.css">
     <link rel="stylesheet" href="../css/pwa_currency_converter.css">
+    <script src="../js/swipe.js"></script>
 </head>
 <!--html and layout-->
 
@@ -19,20 +20,46 @@
         </div>
     </div>
     <div style="position: absolute;top:7vh;width: var(--body_width);">
-        <div id="div_list_layout" style="display: grid;grid-template-columns: 30%  70%; grid-template-rows: repeat(auto-fill, 7vh);">
+        <div id="div_list_layout" style="display: grid;grid-template-columns: 100%; grid-template-rows: repeat(auto-fill, 7vh);">
             <!--use as template-->
-            <div class="class_iso_code" id="div_unit_row_number_counter">
-                <!--wt_unit-->EUR</div>
-            <div class="class_currency_name" id="div_name_row_number_counter">
-                <!--wt_name-->euro</div>
+            <div>
+                <div id="slider_row_number_counter1" class="swipe">
+                    <div class="swipe-wrap">
+                        <div style="display: grid;grid-template-columns: 30%  70%; grid-template-rows: 7vh;">
+                            <div class="class_iso_code" id="div_unit_row_number_counter">
+                                <!--wt_unit-->EUR</div>
+                            <div class="class_currency_name" id="div_name_row_number_counter">
+                                <!--wt_name-->euro</div>
+                        </div>
+                        <div style="text-align: right;">remove</div>
+                    </div>
+                </div>
+            </div>
             <!--row-->
             <!--end use as template-->
             <!--ignore as template-->
-            <div class="class_iso_code">USD</div>
-            <div class="class_currency_name">dollar</div>
-
-            <div class="class_iso_code">IRD</div>
-            <div class="class_currency_name">india</div>
+            <div>
+                <div id="slider_row_number_counter2" class="swipe">
+                    <div class="swipe-wrap">
+                        <div style="display: grid;grid-template-columns: 30%  70%; grid-template-rows: 7vh;">
+                            <div class="class_iso_code" id="div_unit_row_number_counter">USD</div>
+                            <div class="class_currency_name" id="div_name_row_number_counter">dollar</div>
+                        </div>
+                        <div style="text-align: right;">remove</div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div id="slider_row_number_counter3" class="swipe">
+                    <div class="swipe-wrap">
+                        <div style="display: grid;grid-template-columns: 30%  70%; grid-template-rows: 7vh;">
+                            <div class="class_iso_code" id="div_unit_row_number_counter">IRD</div>
+                            <div class="class_currency_name" id="div_name_row_number_counter">india</div>
+                        </div>
+                        <div style="text-align: right;">remove</div>
+                    </div>
+                </div>
+            </div>
             <!--end ignore as template-->
         </div>
         <div>
@@ -40,5 +67,11 @@
         </div>
     </div>
 </body>
+<!-- this script is only part of the static html, but not of the dynamic, rust-driven page -->
+<script>
+    window.mySwipe1 = new Swipe(document.getElementById('slider_row_number_counter1'));
+    window.mySwipe2 = new Swipe(document.getElementById('slider_row_number_counter2'));
+    window.mySwipe3 = new Swipe(document.getElementById('slider_row_number_counter3'));
+</script>
 
 </html>

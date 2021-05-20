@@ -14,9 +14,8 @@
 <body>
     <div id="modal_about" class="w3_modal" style="width: var(--body_width)">
         <div class="w3_modal_content" style="width: var(--body_width)">
-            <div class="w3-container" style="width: var(--body_width)">
-                <h2>About</h2>
-                <p><span class="span_button" id="modal_about_share" onclick="
+            <h2>About</h2>
+            <p><span class="span_button" id="modal_about_share" onclick="
                     // web_sys does not contain navigator.share() yet 2021-05-17                 
                     navigator.share({
                         title: 'pwa_currency_converter',
@@ -24,14 +23,13 @@
                         url: 'https://bestia.dev/pwa_currency_converter/',
                     });                   
                 ">Share</span></p>
-                <p>Open source project on github:</p>
-                <p><a href="https://github.com/LucianoBestia/pwa_currency_converter" target="_blank">pwa_currency_converter</a></p>
-                <p>This PWA app is made for mobile browsers in portrait orientation.</p>
-                <p></p>
-                <p>OpenSource MIT license</p>
-                <p>© 2021 Luciano Bestia ver.<span id="span_version">1</span></p>
-                <p><span class="span_button" id="modal_about_close">Close</span></p>
-            </div>
+            <p>Open source project on github:</p>
+            <p><a href="https://github.com/LucianoBestia/pwa_currency_converter" target="_blank">pwa_currency_converter</a></p>
+            <p>This PWA app is made for mobile browsers in portrait orientation.</p>
+            <p></p>
+            <p>OpenSource MIT license</p>
+            <p>© 2021 Luciano Bestia ver.<span id="span_version">1</span></p>
+            <p><span class="span_button" id="modal_about_close">Close</span></p>
         </div>
     </div>
 </body>

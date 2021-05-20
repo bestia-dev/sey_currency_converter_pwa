@@ -5,12 +5,12 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.519.1431  date: 2021-05-19 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.520.1227  date: 2021-05-20 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1338-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1344-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-94-blue.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-267-purple.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)

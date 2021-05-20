@@ -61,6 +61,11 @@ pub async fn page_input_currency_used() {
     w::set_inner_html("div_list_layout", &html_list);
 
     // region: event handlers
+    let js_cmd = "console.log('swipe');
+    window.mySwipe = new Swipe(document.getElementById('slider'));
+    ";
+    unwrap!(js_sys::eval(js_cmd));
+
     on_click!("div_back", div_back_on_click);
     on_click!("page_input_currency_used_more", page_input_currency_used_more_on_click);
 
@@ -79,6 +84,13 @@ pub fn div_back_on_click(_element_id: &str) {
     });
 }
 
+/// opens the page_input_currency
+fn page_input_currency_used_more_on_click(_element_id: &str) {
+    spawn_local(async {
+        crate::page_input_currency_mod::page_input_currency().await;
+    });
+}
+
 /// unit is a field in the row of the list
 pub fn row_cell_on_click(_element_prefix: &str, row_number: usize) {
     let element_id = format!("div_unit_{}", row_number);
@@ -90,12 +102,5 @@ pub fn row_cell_on_click(_element_prefix: &str, row_number: usize) {
         crate::fetch_rates_mod::fetch_and_save().await;
         crate::fetch_rates_mod::modify_rate().await;
         crate::page_main_mod::page_main().await;
-    });
-}
-
-/// opens the page_input_currency
-fn page_input_currency_used_more_on_click(_element_id: &str) {
-    spawn_local(async {
-        crate::page_input_currency_mod::page_input_currency().await;
     });
 }

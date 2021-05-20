@@ -182,10 +182,11 @@ the grid-template-columns and grid-template-rows are defined in the html*/
 .w3_modal {
     z-index: 3;
     display: block;
-    padding-top: 10%;
     position: fixed;
     left: 0;
     top: 0;
+    padding-top: 20%;
+    width: var(--body_width);
     height: 100vh;
     overflow: auto;
     /*opacity 70%*/
@@ -194,6 +195,7 @@ the grid-template-columns and grid-template-rows are defined in the html*/
 }
 
 .w3_modal_content {
+    width: var(--body_width);
     margin: auto;
     background-color: #fff;
     color: var(--f_color_body);
@@ -284,3 +286,27 @@ the grid-template-columns and grid-template-rows are defined in the html*/
 
 
 /* endregion: page_unit */
+
+
+/* region: swipe */
+
+.swipe {
+    overflow: hidden;
+    visibility: hidden;
+    position: relative;
+}
+
+.swipe-wrap {
+    overflow: hidden;
+    position: relative;
+}
+
+.swipe-wrap>div {
+    float: left;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+
+/* endregion: swipe */
