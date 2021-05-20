@@ -10,4 +10,4 @@
 **/*.rs.bk
 
 # result of compilation does not need to go to repository
-/pkg/
+./pkg/
