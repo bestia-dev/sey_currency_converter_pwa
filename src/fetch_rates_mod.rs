@@ -18,6 +18,9 @@ pub async fn fetch_and_save() {
 pub async fn fetch_and_serde_json(input_currency: &str) -> Value {
     let url = format!("https://www.floatrates.com/daily/{}.json", input_currency.to_lowercase());
     let resp_body_text = w::fetch_response(&url).await;
+    if resp_body_text.is_empty() {
+        w::debug_write("error: resp_body_text is empty. Probably stupid CORS or CORB. ");
+    }
     // there is 8 special characters I want to avoid
     let resp_body_text = resp_body_text
         .replace(r"\t", "")

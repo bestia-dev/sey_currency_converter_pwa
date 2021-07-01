@@ -13,7 +13,7 @@ use wasm_bindgen::JsValue;
 
 // rustfmt 1.4.25 bug removes the word async from extern "C". Skip this.
 #[rustfmt::skip]
-#[wasm_bindgen(raw_module = "/pwa_currency_converter/js/idb_exports.js")]
+#[wasm_bindgen(raw_module = "/sey_currency_converter_pwa/js/idb_exports.js")]
 extern "C" {
     pub(crate) fn check_browser_capability();
 

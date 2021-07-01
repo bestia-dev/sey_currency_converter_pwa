@@ -1,10 +1,10 @@
 [package]
-name = "pwa_currency_converter"
-version = "2021.520.1357"
+name = "sey_currency_converter_pwa"
+version = "2021.701.1329"
 authors = ["Luciano Bestia <Luciano.Bestia@gmail.com>"]
 edition = "2018"
-description = "currency converter Progressive Web App"
-repository = "https://github.com/LucianoBestia/pwa_currency_converter"
+description = "SEY currency converter Progressive Web App"
+repository = "https://github.com/LucianoBestia/sey_currency_converter_pwa"
 readme = "README.md"
 license = "MIT"
 keywords = ["wasm"]
@@ -55,6 +55,7 @@ features = [
   "Performance",
   "Request",
   "RequestInit",
+  "RequestMode",
   "Response",
   "Screen",
   "Window",

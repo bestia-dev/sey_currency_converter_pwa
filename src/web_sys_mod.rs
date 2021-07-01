@@ -121,6 +121,7 @@ pub async fn fetch_response(url: &str) -> String {
     // Request init
     let mut opts = RequestInit::new();
     opts.method("GET");
+    opts.mode(web_sys::RequestMode::Cors);
     let request = unwrap!(Request::new_with_str_and_init(url, &opts));
     // log1("before fetch");
     let resp_jsvalue = unwrap!(JsFuture::from(window().fetch_with_request(&request)).await);

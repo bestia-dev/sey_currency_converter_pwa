@@ -127,26 +127,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "pwa_currency_converter"
-version = "2021.520.1357"
-dependencies = [
- "chrono",
- "console_error_panic_hook",
- "js-sys",
- "lazy_static",
- "serde",
- "serde-wasm-bindgen",
- "serde_json",
- "strum",
- "strum_macros",
- "unwrap",
- "wasm-bindgen",
- "wasm-bindgen-futures",
- "wasm-bindgen-test",
- "web-sys",
-]
-
-[[package]]
 name = "quote"
 version = "1.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -208,6 +188,26 @@ dependencies = [
  "itoa",
  "ryu",
  "serde",
+]
+
+[[package]]
+name = "sey_currency_converter_pwa"
+version = "2021.701.1329"
+dependencies = [
+ "chrono",
+ "console_error_panic_hook",
+ "js-sys",
+ "lazy_static",
+ "serde",
+ "serde-wasm-bindgen",
+ "serde_json",
+ "strum",
+ "strum_macros",
+ "unwrap",
+ "wasm-bindgen",
+ "wasm-bindgen-futures",
+ "wasm-bindgen-test",
+ "web-sys",
 ]
 
 [[package]]

@@ -1,24 +1,24 @@
 [comment]: # (lmake_md_to_doc_comments segment start A)
 
-# pwa_currency_converter
+# sey_currency_converter_pwa
 
 [comment]: # (lmake_cargo_toml_to_md start)
 
-**currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/pwa_currency_converter); version: 2021.520.1357  date: 2021-05-20 authors: Luciano Bestia***  
+**SEY currency converter Progressive Web App**  
+***[repo](https://github.com/LucianoBestia/sey_currency_converter_pwa); version: 2021.701.1329  date: 2021-07-01 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1341-green.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
-[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-94-blue.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-268-purple.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
-[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
-[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1348-green.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-94-blue.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-268-purple.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 
 [comment]: # (lmake_lines_of_code end)
 
-[![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/pwa_currency_converter/blob/master/LICENSE) [![Rust](https://github.com/LucianoBestia/pwa_currency_converter/workflows/RustAction/badge.svg)](https://github.com/LucianoBestia/pwa_currency_converter/)
+[![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/blob/master/LICENSE) [![Rust](https://github.com/LucianoBestia/sey_currency_converter_pwa/workflows/RustAction/badge.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 
 ## PWA
 
@@ -47,8 +47,8 @@ Use `cargo make` to see the prepared steps for deployment like:
 `$ cargo make release`  
 And then follow the instructions on the screen like:  
 
-- Run the web server in a separate terminal: `cd ~/rustprojects/pwa_currency_converter/web_server_folder/;basic-http-server`  
-- Run the web app in your browser: <http://127.0.0.1:4000/pwa_currency_converter/>  
+- Run the web server in a separate terminal: `cd ~/rustprojects/sey_currency_converter_pwa/web_server_folder/;basic-http-server`  
+- Run the web app in your browser: <http://127.0.0.1:4000/sey_currency_converter_pwa/>  
 
 Oh, today I did everything right, but the browser said "This site can't be reached". After many attempts I discovered, that WSL2 `localhost` or `127.0.0.1` connection to Win10 is broken after putting the laptop to sleep. I have to restart the WSL in PowerShell Run as administrator with  
 `Get-Service LxssManager | Restart-Service`.  
@@ -111,12 +111,12 @@ Confusing. But after a long experimentation I made it work. I hope I don't need 
 ## code flow
 
 The browser opens `index.html`.  
-There it runs `import init from "./pkg/pwa_currency_converter.js";`  
-and `init("./pkg/pwa_currency_converter_bg.wasm");`  
+There it runs `import init from "./pkg/sey_currency_converter_pwa.js";`  
+and `init("./pkg/sey_currency_converter_pwa_bg.wasm");`  
 This is the wasm code compiled from `lib.rs` and wasm-bindgen creates the magic to start the designated function.  
 The `idb_exports.js` is the result of typescript transpilation of `idb_exports.ts`, my only typescript module.
 Inside that module I need to import the `idb` module with:  
-`import * as idb from '/pwa_currency_converter/idb/index.js';`
+`import * as idb from '/sey_currency_converter_pwa/idb/index.js';`
 Then Rust code `idbr_imports_mod.rs` imports the `idb_exports.js` javascript module and functions.  
 From here on we are now in pure (more or less) rust code.  
 
@@ -139,7 +139,7 @@ The workaround is to add `rustfmt::skip`:
 
 ```rust
 #[rustfmt::skip]
-#[wasm_bindgen(raw_module = "/pwa_currency_converter/js/idb_exports.js")]
+#[wasm_bindgen(raw_module = "/sey_currency_converter_pwa/js/idb_exports.js")]
 extern "C" {
     fn check_browser_capability();
     #[wasm_bindgen(catch)]
@@ -218,3 +218,9 @@ The `Swipe gesture` is not a native html5 event. It is pretty complicated to rec
 Therefore I use this javascript library: <https://github.com/lyfeyaj/swipe>  
 I added this library also to the static html page, for easy of development. But the code in rust uses it in a different manner.  
 For now I need to replace the row counter.  I plan to use also a callback from javascript back to rust to execute the remove and reopen the same page.  
+
+## icons
+
+I created a simple icon 512x512 in paint.net with the filename icon.pdn. The 2 layers are Background and Layer1. The background is a gradient of color. The Layer1 is the text in `Bradley hand ITC font`. I exported it as icon_original.png.  
+Then I used my web app to create all the pngs needed for  pwa:  <https://bestia.dev/rust_wasm_helper_for_pwa/>. TODO: add generation of favicon.ico.  
+The favicon.ico I create using <https://www.favicon-generator.org/>.  

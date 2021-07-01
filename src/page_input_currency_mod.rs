@@ -123,7 +123,7 @@ pub fn row_cell_on_click(_element_prefix: &str, row_number: usize) {
 pub fn div_search_button_on_click(_element_id: &str) {
     spawn_local(async {
         // put an input box instead of div_units_title and put focus there
-        let html_fragment = r#"<input type="text" id="input_search" size="5" ></input>"#;
+        let html_fragment = r#"<input type="text" id="input_search" size="5" data-gramm_editor="false" ></input>"#;
         w::set_inner_html("div_units_title", &html_fragment);
         w::set_inner_html("div_search_button", "×");
         on_keyup!("input_search", input_search_on_keyup);
