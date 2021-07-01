@@ -17,11 +17,12 @@ use web_sys::{Request, RequestInit, Response};
 #[macro_export]
 macro_rules! on_click {
     ($element_id: expr, $function_ident: ident) => {{
+        let element_id_clone = $element_id.to_owned();
         let closure = Closure::wrap(Box::new(move || {
             $function_ident($element_id);
         }) as Box<dyn FnMut()>);
 
-        let html_element = crate::web_sys_mod::get_html_element_by_id($element_id);
+        let html_element = crate::web_sys_mod::get_html_element_by_id(&element_id_clone);
         html_element.set_onclick(Some(closure.as_ref().unchecked_ref()));
         closure.forget();
     }};

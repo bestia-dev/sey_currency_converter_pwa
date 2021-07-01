@@ -32,6 +32,12 @@ pub async fn put_key_value(db_name: &str, store_name: &str, key: &str, value: &J
     idbjs::put_key_value(db_name, store_name, key, value).await
 }
 
+// delete key
+pub async fn delete_key(db_name: &str, store_name: &str, key: &str) {
+    // return
+    idbjs::delete_key(db_name, store_name, key).await
+}
+
 pub async fn db_store_count_item(db_name: &str, store_name: &str) -> usize {
     // return
     let js_count = idbjs::db_store_count_item(db_name, store_name).await;
@@ -134,6 +140,9 @@ impl ObjectStoreInsideTransaction {
     }
     pub fn put_jsvalue(&self, key: &str, value: &JsValue) {
         idbjs::transaction_object_store_put_jsvalue(&self.tx_ob_st, key, value);
+    }
+    pub fn delete_key(&self, key: &str) {
+        idbjs::transaction_object_store_delete_key(&self.tx_ob_st, key);
     }
 }
 /// ObjectStoreInsideTransaction from JsValue

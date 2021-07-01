@@ -24,7 +24,7 @@
             <!--use as template-->
             <div>
                 <div id="slider_row_number_counter" class="swipe">
-                    <div class="swipe-wrap">
+                    <div class="swipe-wrap" id="swipe_wrap_row_number_counter">
                         <div style="display: grid;grid-template-columns: 30% 70%; grid-template-rows: 7vh;">
                             <div class="class_iso_code" id="div_unit_row_number_counter">
                                 <!--wt_unit-->EUR</div>
@@ -53,10 +53,10 @@
                 <div id="slider_row_number_counter2" class="swipe">
                     <div class="swipe-wrap">
                         <div style="display: grid;grid-template-columns: 30% 70%; grid-template-rows: 7vh;">
-                            <div class="class_iso_code" id="div_unit_row_number_counter2">IRD</div>
-                            <div class="class_currency_name" id="div_name_row_number_counter2">india</div>
+                            <div class="class_iso_code row_active_currency" id="div_unit_row_number_counter2">IRD</div>
+                            <div class="class_currency_name row_active_currency" id="div_name_row_number_counter2">india</div>
                         </div>
-                        <div style="text-align: right;">remove</div>
+                        <div style="text-align: right;">can't remove active currency</div>
                     </div>
                 </div>
             </div>
@@ -69,9 +69,9 @@
 </body>
 <!-- this script is only part of the static html, but not of the dynamic, rust-driven page -->
 <script>
-    window.mySwipe1 = new Swipe(document.getElementById('slider_row_number_counter'));
-    window.mySwipe2 = new Swipe(document.getElementById('slider_row_number_counter1'));
-    window.mySwipe3 = new Swipe(document.getElementById('slider_row_number_counter2'));
+    window.mySwipe_1 = new Swipe(document.getElementById('slider_row_number_counter'));
+    window.mySwipe_2 = new Swipe(document.getElementById('slider_row_number_counter1'));
+    window.mySwipe_3 = new Swipe(document.getElementById('slider_row_number_counter2'));
 </script>
 
 </html>

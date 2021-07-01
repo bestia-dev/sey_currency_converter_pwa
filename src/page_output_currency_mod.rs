@@ -30,7 +30,7 @@ pub async fn page_output_currency() {
     w::set_inner_html("div_for_wasm_html_injecting", &html_fragment);
 
     // region: binding - read from config
-    w::set_text("div_units_input_currency", &crate::currdb_config_mod::get_input_currency().await);
+
     // endregion: binding - read from config
 
     // region: read from indexed db row by row
@@ -63,7 +63,6 @@ pub async fn page_output_currency() {
 
     // region: event handlers
     on_click!("div_back", div_back_on_click);
-    on_click!("div_reload_button", div_reload_button_on_click);
 
     // handler for every row
     for i in 0..=row_number_counter {
@@ -89,14 +88,5 @@ pub fn row_cell_on_click(_element_prefix: &str, row_number: usize) {
         crate::currdb_config_mod::set_output_currency(&iso_code).await;
         crate::fetch_rates_mod::modify_rate().await;
         crate::page_main_mod::page_main().await;
-    });
-}
-
-/// reload json from floatrates.com and save to indexeddb
-pub fn div_reload_button_on_click(_element_id: &str) {
-    spawn_local(async {
-        crate::fetch_rates_mod::fetch_and_save().await;
-        crate::fetch_rates_mod::modify_rate().await;
-        page_output_currency().await;
     });
 }

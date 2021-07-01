@@ -7,7 +7,7 @@
     --b_color_body: #1f351b;
     --b_color_title: #8BC24A;
     --b_color_input_output: #FAFAFA;
-    --b_color_toolbar: #F1F7E9;
+    --b_color_toolbar: #D7E8C0;
     --b_color_cell: #F1F7E9;
     --b_color_cell_commands: #DDEDC8;
     --b_color_cell_disabled: whitesmoke;
@@ -238,12 +238,6 @@ the grid-template-columns and grid-template-rows are defined in the html*/
     text-align: center;
 }
 
-#div_units_input_currency {
-    font-size: 20px;
-    text-align: right;
-    padding-right: 3%;
-}
-
 #div_list_layout {
     font-size: 30px;
     border-top: 1px solid;
@@ -282,6 +276,10 @@ the grid-template-columns and grid-template-rows are defined in the html*/
     color: var(--f_color_body);
     font-size: 18px;
     border-bottom: 1px solid;
+}
+
+.row_active_currency {
+    background-color: var(--b_color_toolbar);
 }
 
 

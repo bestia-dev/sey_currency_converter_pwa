@@ -16,15 +16,19 @@ export function check_browser_capability() {
 }
 //#region shortcut functions
 /// get key-value in a store 
-export async function get_key_value(db_name, store, key) {
+export async function get_key_value(db_name, store_name, key) {
     let db = await use_db(db_name);
-    const value = await db.get(store, key);
+    const value = await db.get(store_name, key);
     return value;
 }
 /// put key-value in a store (upsert)
-export async function put_key_value(db_name, store, key, value) {
+export async function put_key_value(db_name, store_name, key, value) {
     let db = await use_db(db_name);
-    db.put(store, value, key);
+    db.put(store_name, value, key);
+}
+export async function delete_key(db_name, store_name, key) {
+    let db = await use_db(db_name);
+    db.delete(store_name, key);
 }
 export async function db_store_count_item(db_name, store_name) {
     let db = await use_db(db_name);
@@ -100,6 +104,10 @@ export async function transaction_object_store_get_jsvalue(tx_ob_st, key) {
 // put inside a transaction_object_store
 export function transaction_object_store_put_jsvalue(tx_ob_st, key, value) {
     tx_ob_st.put(value, key);
+}
+// delete inside a transaction_object_store
+export function transaction_object_store_delete_key(tx_ob_st, key) {
+    tx_ob_st.delete(key);
 }
 //#endregion object store
 //#region cursor

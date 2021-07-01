@@ -21,15 +21,20 @@ export function check_browser_capability(){
 
 //#region shortcut functions
 /// get key-value in a store 
-export async function get_key_value(db_name:string, store:string, key:string){
+export async function get_key_value(db_name:string, store_name:string, key:string){
     let db = await use_db(db_name);
-    const value = await db.get(store, key);
+    const value = await db.get(store_name, key);
     return value;
 }
 /// put key-value in a store (upsert)
-export async function put_key_value(db_name:string, store:string, key:string, value:any){
+export async function put_key_value(db_name:string, store_name:string, key:string, value:any){
     let db = await use_db(db_name);
-    db.put(store, value, key);
+    db.put(store_name, value, key);
+}
+export async function delete_key(db_name:string, store_name:string, key:string){
+    let db = await use_db(db_name);
+    db.delete(store_name,key);
+   
 }
 export async function db_store_count_item(db_name:string, store_name:string){
     let db = await use_db(db_name);
@@ -111,6 +116,10 @@ export async function transaction_object_store_get_jsvalue(tx_ob_st:idb.IDBPObje
 export function transaction_object_store_put_jsvalue(tx_ob_st: any, key:string, value:any) {
     tx_ob_st.put(value,key);
 }
+// delete inside a transaction_object_store
+export function transaction_object_store_delete_key(tx_ob_st: any, key:string) {
+    tx_ob_st.delete(key);
+}
 //#endregion object store
 
 //#region cursor
@@ -126,4 +135,5 @@ export function cursor_key(cursor:idb.IDBPCursorWithValue<unknown, [string], str
 export function cursor_value(cursor:idb.IDBPCursorWithValue<unknown, [string], string, unknown, "readonly">){
     return cursor.value;
 }
+
 //#endregion

@@ -21,6 +21,7 @@ extern "C" {
     pub(crate) async fn get_key_value(db_name: &str, store_name: &str, key: &str, ) -> JsValue;
     #[wasm_bindgen(catch)]    
     pub(crate) async fn put_key_value(db_name: &str, store_name: &str, key: &str, value: &JsValue, ) -> Result<(), JsValue>;
+    pub(crate) async fn delete_key(db_name: &str, store_name: &str, key: &str);
     pub(crate) async fn db_store_count_item(db_name: &str, store_name: &str ) -> JsValue;
     // endregion: shortcut functions
 
@@ -46,6 +47,7 @@ extern "C" {
     // region: object store
     pub(crate) async fn transaction_object_store_get_jsvalue(tx_ob_st: &JsValue, key:&str)->JsValue;
     pub(crate) fn transaction_object_store_put_jsvalue(tx_ob_st: &JsValue, key:&str, value:&JsValue);    
+    pub(crate) fn transaction_object_store_delete_key(tx_ob_st: &JsValue, key:&str);   
     // endregion: object store
 
     // region: cursor

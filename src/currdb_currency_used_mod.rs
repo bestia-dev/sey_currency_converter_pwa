@@ -38,6 +38,9 @@ impl StoreCurrdbCurrencyUsed {
         let jsvalue = to_jsvalue(name);
         self.object_store_inside_transaction.put_jsvalue(iso_code, &jsvalue);
     }
+    pub fn delete(&self, iso_code: &str) {
+        self.object_store_inside_transaction.delete_key(iso_code);
+    }
 }
 
 pub fn create_store_and_init(db: &db::Database, tx: &db::Transaction) {
@@ -71,4 +74,12 @@ pub async fn put_single_item(iso_code: &str, name: &str) {
 // count items in store
 pub async fn count_item() -> usize {
     crate::currdb_mod::db_store_count_item(THIS_OBJECT_STORE).await
+}
+
+// shortcut function to delete only one item
+pub async fn delete_single_item(iso_code: &str) {
+    let tx = crate::currdb_mod::transaction_open().await;
+    let store_currency_used = StoreCurrdbCurrencyUsed::new_for_readwrite(&tx);
+    store_currency_used.delete(iso_code);
+    tx.close()
 }
