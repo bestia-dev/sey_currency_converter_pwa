@@ -1,6 +1,6 @@
 // page_main_mod.rs
 
-//use unwrap::unwrap;
+use unwrap::unwrap;
 use wasm_bindgen::prelude::*;
 //use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen::JsCast;
@@ -53,7 +53,7 @@ pub async fn page_main() {
     on_click!("div_backspace", div_backspace_on_click);
     on_click!("div_clear", div_c_on_click);
 
-    on_click!("div_reload_button", div_reload_button_on_click);
+    on_click!("div_rate_date", div_rate_date_on_click);
 
     on_click!("div_input_unit", div_input_unit_on_click);
     on_click!("div_output_unit", div_output_unit_on_click);
@@ -66,7 +66,10 @@ pub async fn page_main() {
 }
 
 /// reload json from floatrates.com and save to indexeddb
-pub fn div_reload_button_on_click(_element_id: &str) {
+pub fn div_rate_date_on_click(_element_id: &str) {
+    // call javascript function show_snackbar
+    unwrap!(js_sys::eval("show_snackbar();"));
+
     spawn_local(async {
         crate::fetch_rates_mod::fetch_and_save().await;
         crate::fetch_rates_mod::modify_rate().await;
@@ -142,7 +145,7 @@ fn div_input_unit_on_click(_element_id: &str) {
 /// opens the page_output_currency
 fn div_output_unit_on_click(_element_id: &str) {
     spawn_local(async {
-        crate::page_output_currency_mod::page_output_currency().await;
+        crate::page_output_currency_used_mod::page_output_currency_used().await;
     });
 }
 

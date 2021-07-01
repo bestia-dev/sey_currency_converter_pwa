@@ -5,14 +5,14 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **SEY currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/sey_currency_converter_pwa); version: 2021.701.1802  date: 2021-07-01 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/sey_currency_converter_pwa); version: 2021.701.2317  date: 2021-07-01 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1397-green.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
-[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-93-blue.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-276-purple.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1537-green.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-97-blue.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-317-purple.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 
@@ -190,6 +190,7 @@ My module `idbr_mod` contains all the necessary functions to operate with indexe
 For that I created the module `currdb_mod` and encapsulated all the necessary functions for this database. I also re-exported some structs from the `idbr_mod`.  
 My code must use only this module for any database need.  
 For every `ObjectStore` I created its own module to make things more easy to separate and encapsulate.  
+<!-- markdownlint-disable MD033 -->
 <details>
   <summary>plantuml diagram</summary>
 
@@ -207,6 +208,7 @@ note right of (currdb_mod): encapsulates all functions for db work
   ```
 
 </details>  
+<!-- markdownlint-enable MD033 -->
 
 ![currdb_diagram](images/currdb_diagram.svg)  
 

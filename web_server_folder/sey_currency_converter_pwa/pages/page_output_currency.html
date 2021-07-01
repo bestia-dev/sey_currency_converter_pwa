@@ -6,25 +6,26 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="author" content="https://github.com/LucianoBestia/sey_currency_converter_pwa">
     <meta name="viewport" content="width = device-width,initial-scale = 1.0" />
-    <link rel="stylesheet" href=/sey_currency_converter_pwa/css/normalize.css ">
-    <link rel="stylesheet " href=/sey_currency_converter_pwa/css/sey_currency_converter_pwa.css">
+    <link rel="stylesheet" href="/sey_currency_converter_pwa/css/normalize.css">
+    <link rel="stylesheet" href="/sey_currency_converter_pwa/css/sey_currency_converter_pwa.css">
 </head>
 <!--html and layout-->
 
 <body>
     <div class="fixed_header" style="height: 7vh;width: var(--body_width)">
-        <div id="div_units_header" style="display: grid;width: var(--body_width);grid-template-columns: 15% 85%; grid-template-rows: 7vh;">
+        <div id="div_units_header" style="display: grid;width: var(--body_width);grid-template-columns: 20% 70% 10%; grid-template-rows: 7vh;">
             <div id="div_back">←</div>
             <div id="div_units_title">Select output currency</div>
+            <div id="div_search_button">🔍</div>
         </div>
     </div>
     <div id="div_list_layout" style="position: absolute;width: var(--body_width); top:7vh; display: grid;grid-template-columns: 20% 30% 50%; grid-template-rows: repeat(auto-fill, 7vh);">
         <!--use as template-->
         <div class="class_iso_code" id="div_unit_row_number_counter">
             <!--wt_unit-->EUR</div>
-        <div class="class_rate">
+        <div class="class_rate" id="div_rate_row_number_counter">
             <!--wt_rate-->0</div>
-        <div class="class_currency_name">
+        <div class="class_currency_name" id="div_name_row_number_counter">
             <!--wt_name-->euro</div>
         <!--row-->
         <!--end use as template-->

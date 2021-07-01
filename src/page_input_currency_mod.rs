@@ -13,7 +13,6 @@ use lazy_static::lazy_static;
 use std::sync::Mutex;
 
 // region: use macros
-
 use crate::on_click;
 use crate::on_keyup;
 use crate::row_on_click;

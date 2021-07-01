@@ -18,6 +18,7 @@ mod page_main_mod;
 mod page_manual_rates_mod;
 mod page_modal_about_mod;
 mod page_output_currency_mod;
+mod page_output_currency_used_mod;
 mod utils_mod;
 mod web_sys_mod;
 

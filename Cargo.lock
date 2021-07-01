@@ -192,7 +192,7 @@ dependencies = [
 
 [[package]]
 name = "sey_currency_converter_pwa"
-version = "2021.701.1802"
+version = "2021.701.2317"
 dependencies = [
  "chrono",
  "console_error_panic_hook",

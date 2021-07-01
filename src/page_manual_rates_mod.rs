@@ -48,10 +48,7 @@ pub async fn page_manual_rates() {
 
         let template_with_data = template.replace("row_number_counter", &row_number_counter.to_string());
 
-        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_input_currency", &fields.input_currency);
-        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_output_currency", &fields.output_currency);
         let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_rate", &format!("{:.3}", fields.rate));
-        let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_date", &fields.date);
         let template_with_data = ut::replace_wt_placeholder(&template_with_data, "wt_description", &fields.description);
         html_list.push_str(&template_with_data);
         if cursor.next().await.is_none() {

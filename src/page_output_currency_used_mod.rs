@@ -1,4 +1,4 @@
-// page_input_currency_used_mod.rs
+// page_output_currency_used_mod.rs
 
 //use std::ops::Index;
 
@@ -15,9 +15,9 @@ use crate::utils_mod as ut;
 use crate::web_sys_mod as w;
 
 /// fetch and inject HTML fragment into index.html/div_for_wasm_html_injecting
-pub async fn page_input_currency_used() {
+pub async fn page_output_currency_used() {
     // fetch page_unit.html and inject it
-    let resp_body_text = w::fetch_response("pages/page_input_currency_used.html").await;
+    let resp_body_text = w::fetch_response("pages/page_output_currency_used.html").await;
     // only the html inside the <body> </body>
     let (html_fragment, _new_pos_cursor) = unwrap!(ut::get_delimited_text(&resp_body_text, 0, "<body>", "</body>"));
     // get template
@@ -73,7 +73,7 @@ pub async fn page_input_currency_used() {
                 "window.mySwipe_{} = new Swipe(
                     document.getElementById('slider_{}'),
                     {{
-                        callback: swipe_callback_input
+                        callback: swipe_callback_output
                     }}
                 );\n",
                 row_number_counter, row_number_counter
@@ -92,7 +92,7 @@ pub async fn page_input_currency_used() {
 
     // region: event handlers
     on_click!("div_back", div_back_on_click);
-    on_click!("page_input_currency_used_more", page_input_currency_used_more_on_click);
+    on_click!("page_output_currency_used_more", page_output_currency_used_more_on_click);
     // handler for every row
     let cursor = crate::currdb_mod::get_cursor(&db::ObjectStores::CurrencyUsed).await;
     loop {
@@ -118,23 +118,23 @@ pub fn div_back_on_click(_element_id: &str) {
     });
 }
 
-/// opens the page_input_currency
-fn page_input_currency_used_more_on_click(_element_id: &str) {
+/// opens the page_output_currency
+fn page_output_currency_used_more_on_click(_element_id: &str) {
     spawn_local(async {
-        crate::page_input_currency_mod::page_input_currency().await;
+        crate::page_output_currency_mod::page_output_currency().await;
     });
 }
 
 /// unit is a field in the row of the list
 pub fn row_cell_on_click(element_id: &str) {
     // Iso_code is always 3 letters.
-    let input_currency = element_id[element_id.len() - 3..].to_string();
-    w::debug_write(&input_currency);
+    let output_currency = element_id[element_id.len() - 3..].to_string();
+    w::debug_write(&output_currency);
     spawn_local(async move {
-        let input_currency = input_currency.clone();
-        //w::debug_write(&format!("input input_currency: {}", &input_currency));
-        crate::currdb_config_mod::set_input_currency(&input_currency).await;
-        crate::fetch_rates_mod::fetch_and_save().await;
+        let output_currency = output_currency.clone();
+        //w::debug_write(&format!("output output_currency: {}", &output_currency));
+        crate::currdb_config_mod::set_output_currency(&output_currency).await;
+        // not needed for output currency crate::fetch_rates_mod::fetch_and_save().await;
         crate::fetch_rates_mod::modify_rate().await;
         crate::page_main_mod::page_main().await;
     });
@@ -142,7 +142,7 @@ pub fn row_cell_on_click(element_id: &str) {
 
 #[allow(dead_code)]
 #[wasm_bindgen]
-pub async fn swipe_callback_input(_pos: JsValue, index: JsValue, _dir: JsValue) {
+pub async fn swipe_callback_output(_pos: JsValue, index: JsValue, _dir: JsValue) {
     let html_element: web_sys::HtmlElement = unwrap!(index.dyn_into::<web_sys::HtmlElement>());
     let parent_element = unwrap!(html_element.parent_element());
     let element_id = parent_element.id();
@@ -151,5 +151,5 @@ pub async fn swipe_callback_input(_pos: JsValue, index: JsValue, _dir: JsValue) 
     w::debug_write(&iso_code);
     crate::currdb_currency_used_mod::delete_single_item(&iso_code).await;
     // refresh this page
-    crate::page_input_currency_used_mod::page_input_currency_used().await;
+    crate::page_output_currency_used_mod::page_output_currency_used().await;
 }
