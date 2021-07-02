@@ -1,18 +1,18 @@
 [comment]: # (lmake_md_to_doc_comments segment start A)
 
-# sey_currency_converter_pwa
+# SEY currency converter pwa
 
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **SEY currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/sey_currency_converter_pwa); version: 2021.702.1228  date: 2021-07-02 authors: Luciano Bestia***  
+***[repo](https://github.com/LucianoBestia/sey_currency_converter_pwa); version: 2021.702.1258  date: 2021-07-02 authors: Luciano Bestia***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1537-green.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1555-green.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-97-blue.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-317-purple.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-320-purple.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 

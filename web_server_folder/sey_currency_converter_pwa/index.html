@@ -40,20 +40,6 @@
     <meta name="msapplication-TileColor" content="#000000">
     <meta name="msapplication-TileImage" content="icons/ms-icon-144x144.png">
     <!-- endregion: A lot of metadata just for PWA -->
-    <script>
-        function show_snackbar() {
-            // Get the snackbar DIV
-            var x = document.getElementById("snackbar");
-
-            // Add the "show" class to DIV
-            x.className = "show";
-
-            // After 3 seconds, remove the show class from DIV
-            setTimeout(function() {
-                x.className = x.className.replace("show", "");
-            }, 3000);
-        }
-    </script>
 </head>
 
 <body>

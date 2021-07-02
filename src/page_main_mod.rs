@@ -1,6 +1,6 @@
 // page_main_mod.rs
 
-use unwrap::unwrap;
+// use unwrap::unwrap;
 use wasm_bindgen::prelude::*;
 //use wasm_bindgen::{JsCast, JsValue};
 use wasm_bindgen::JsCast;
@@ -67,13 +67,29 @@ pub async fn page_main() {
 
 /// reload json from floatrates.com and save to indexeddb
 pub fn div_rate_date_on_click(_element_id: &str) {
-    // call javascript function show_snackbar
-    unwrap!(js_sys::eval("show_snackbar();"));
+    show_snackbar();
 
     spawn_local(async {
         crate::fetch_rates_mod::fetch_and_save().await;
         crate::fetch_rates_mod::modify_rate().await;
     });
+}
+
+pub fn show_snackbar() {
+    // Get the snackbar DIV
+    let element = w::get_element_by_id("snackbar");
+    // Add the "show" class to DIV
+    element.set_class_name("show");
+    // After 3 seconds, remove the show class from DIV
+    let closure = Closure::wrap(Box::new(move || {
+        w::debug_write("Timeout closure.");
+        let class_name = element.class_name();
+        let class_name = class_name.replace("show", "");
+        element.set_class_name(&class_name);
+    }) as Box<dyn Fn()>);
+
+    w::window().set_timeout_with_callback_and_timeout_and_arguments_0(closure.as_ref().unchecked_ref(), 3000).unwrap();
+    closure.forget();
 }
 
 /// event handler for 0-9 numeric cells

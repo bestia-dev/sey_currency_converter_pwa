@@ -1,6 +1,6 @@
 [package]
 name = "sey_currency_converter_pwa"
-version = "2021.702.1228"
+version = "2021.702.1258"
 authors = ["Luciano Bestia <Luciano.Bestia@gmail.com>"]
 edition = "2018"
 description = "SEY currency converter Progressive Web App"
