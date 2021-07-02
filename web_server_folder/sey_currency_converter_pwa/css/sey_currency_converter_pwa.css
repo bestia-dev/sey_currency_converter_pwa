@@ -32,8 +32,28 @@
     touch-action: manipulation;
 }
 
+@font-face {
+    font-family: "Roboto";
+    /* fonts are inside the css folder */
+    src: url("Roboto-Medium.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: 'Font Awesome 5 Free';
+    font-style: normal;
+    font-weight: 900;
+    font-display: block;
+    src: url("fa-solid-900.woff2") format("woff2");
+}
+
+.fa,
+.fas {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+}
+
 html {
-    font-family: sans-serif;
+    font-family: 'Roboto';
     font-size: 15px;
     background-color: var(--b_color_body);
     color: var(--f_color_body);
