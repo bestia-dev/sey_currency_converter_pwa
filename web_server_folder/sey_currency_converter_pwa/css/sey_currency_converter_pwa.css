@@ -327,6 +327,9 @@ the grid-template-columns and grid-template-rows are defined in the html*/
 /* region: snackbar / toast */
 
 
+/* https://www.w3schools.com/howto/howto_js_snackbar.asp */
+
+
 /* The snackbar - position it at the bottom and in the middle of the screen */
 
 #snackbar {

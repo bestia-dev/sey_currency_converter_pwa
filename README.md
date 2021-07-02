@@ -226,3 +226,13 @@ For now I need to replace the row counter.  I plan to use also a callback from j
 I created a simple icon 512x512 in paint.net with the filename icon.pdn. The 2 layers are Background and Layer1. The background is a gradient of color. The Layer1 is the text in `Bradley hand ITC font`. I exported it as icon_original.png.  
 Then I used my web app to create all the pngs needed for  pwa:  <https://bestia.dev/rust_wasm_helper_for_pwa/>. TODO: add generation of favicon.ico.  
 The favicon.ico I create using <https://www.favicon-generator.org/>.  
+
+## fonts
+
+I decided to use the `Roboto-Medium` font that is the default android font.  I copied the `woff2` file in the `css/` folder.
+For some icons I use the `Font Awesome 5`. The `solid` font is mostly free: <https://fontawesome.com/v5.15/icons?d=gallery&p=2&s=solid&m=free>.  
+I downloaded the zip with a bunch of files. I copied only the `fa-solid-90.woff2` and the `fontawesome.css` to the `css/` folder. In my css file I added a couple of lines copied from `solid.css`. I will use only the `woff2` font for now.  
+
+## snackbar or toast
+
+Snackbar or toast is a modal window that show some information to the user and automatically closes in a short time. It is nice for short and unobtrusive notifications <https://www.w3schools.com/howto/howto_js_snackbar.asp>.  
