@@ -25,7 +25,7 @@
 "A word that is used in time when one is extremely happy, or likes something."  
 (<https://www.urbandictionary.com/define.php?term=sey>)  
 
-![icon on android](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Icon_on_android.png "icon on android") ![screenshot](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot")
+![screenshot](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot") ![icon on android](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Icon_on_android.png "icon on android") 
 
 Try it:  
 <https://bestia.dev/sey_currency_converter_pwa>  
@@ -246,3 +246,9 @@ I downloaded the zip with a bunch of files. I copied only the `fa-solid-90.woff2
 ## snackbar or toast
 
 Snackbar or toast is a modal window that show some information to the user and automatically closes in a short time. It is nice for short and unobtrusive notifications <https://www.w3schools.com/howto/howto_js_snackbar.asp>.  
+
+## screenshot img in Github markdown
+
+First I tried with a `jpg` img, but it becomes width=100% and that is not what ai want.  
+If I change it to `png` img, it looks good. Strange tricks:  
+`![screenshot](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot")`  
