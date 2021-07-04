@@ -25,9 +25,9 @@
 "A word that is used in time when one is extremely happy, or likes something."  
 (<https://www.urbandictionary.com/define.php?term=sey>)  
 
-![icon on android](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Icon_on_android.jpg "icon on android")
+![icon on android](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Icon_on_android.png "icon on android")
 
-![screenshot](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.jpg "screenshot")
+![screenshot](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot")
 
 Try it:  
 <https://bestia.dev/sey_currency_converter_pwa>  
