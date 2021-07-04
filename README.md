@@ -20,6 +20,11 @@
 
 [![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/blob/master/LICENSE) [![Rust](https://github.com/LucianoBestia/sey_currency_converter_pwa/workflows/RustAction/badge.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
 
+## SEY - $€¥
+
+"A word that is used in time when one is extremely happy, or likes something."  
+(<https://www.urbandictionary.com/define.php?term=sey>)  
+
 ## PWA
 
 PWA stands for `Progressive Web Application`.  
