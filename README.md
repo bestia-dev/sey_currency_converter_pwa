@@ -5,7 +5,7 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **SEY currency converter Progressive Web App**  
-***[repo](https://github.com/LucianoBestia/sey_currency_converter_pwa); version: 2021.704.1439  date: 2021-07-04 authors: Luciano Bestia***  
+***version: 2021.704.1439  date: 2021-07-04 author: [Dev_Bestia](https://bestia.dev) repository: [GitHub](https://github.com/LucianoBestia/sey_currency_converter_pwa)***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
