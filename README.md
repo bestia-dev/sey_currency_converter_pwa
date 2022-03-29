@@ -200,6 +200,9 @@ My module `idbr_mod` contains all the necessary functions to operate with indexe
 For that I created the module `currdb_mod` and encapsulated all the necessary functions for this database. I also re-exported some structs from the `idbr_mod`.  
 My code must use only this module for any database need.  
 For every `ObjectStore` I created its own module to make things more easy to separate and encapsulate.  
+
+Update 2022: I now try to use `mermaid` instead of plantuml, because it is integrated in the Github markdown.
+
 <!-- markdownlint-disable MD033 -->
 <details>
   <summary>plantuml diagram</summary>
