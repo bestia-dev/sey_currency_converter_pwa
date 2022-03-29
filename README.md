@@ -5,27 +5,27 @@
 [comment]: # (lmake_cargo_toml_to_md start)
 
 **SEY currency converter Progressive Web App**  
-***version: 2021.704.1439  date: 2021-07-04 author: [Dev_Bestia](https://bestia.dev) repository: [GitHub](https://github.com/LucianoBestia/sey_currency_converter_pwa)***  
+***version: 2021.704.1439  date: 2021-07-04 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/sey_currency_converter_pwa)***  
 
 [comment]: # (lmake_cargo_toml_to_md end)
 
 [comment]: # (lmake_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1550-green.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
-[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-97-blue.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-320-purple.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
-[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
-[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1550-green.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-97-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-320-purple.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+[![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+[![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 
 [comment]: # (lmake_lines_of_code end)
 
-[![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/blob/master/LICENSE) [![Rust](https://github.com/LucianoBestia/sey_currency_converter_pwa/workflows/RustAction/badge.svg)](https://github.com/LucianoBestia/sey_currency_converter_pwa/)
+[![Licence](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/blob/master/LICENSE) [![Rust](https://github.com/bestia-dev/sey_currency_converter_pwa/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 
 ## SEY - $€¥
 
 "A word that is used in time when one is extremely happy, or likes something."  
 (<https://www.urbandictionary.com/define.php?term=sey>)  
 
-![screenshot](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot") ![icon on android](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Icon_on_android.png "icon on android") 
+![screenshot](https://github.com/bestia-dev/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot") ![icon on android](https://github.com/bestia-dev/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Icon_on_android.png "icon on android") 
 
 Try it:  
 <https://bestia.dev/sey_currency_converter_pwa>  
@@ -72,7 +72,7 @@ Some tips for PWA: <https://firt.dev/pwa-design-tips/>
 Indexeddb is the standard database storage inside the browser. It is not Sql. It is a document database.  
 It is more or less a key-value storage, but the value can be a javascript object and that can be complex.  
 The api is in javascript, uses old fashioned callbacks and events, completely async, without async/await or Promises.  
-I experimented with indexeddb in my project <https://github.com/LucianoBestia/indexeddb_from_rust>.  
+I experimented with indexeddb in my project <https://github.com/bestia-dev/indexeddb_from_rust>.  
 Now it is time to make it work. Still I don't know about the performance because Rust and Javascript don't really use the same objects.
 
 ## Typescript adventure
@@ -254,4 +254,4 @@ Snackbar or toast is a modal window that show some information to the user and a
 
 First I tried with a `jpg` img, but it becomes width=100% and that is not what ai want.  
 If I change it to `png` img, it looks good. Strange tricks:  
-`![screenshot](https://github.com/LucianoBestia/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot")`  
+`![screenshot](https://github.com/bestia-dev/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot")`  
