@@ -2,6 +2,7 @@
 name = "sey_currency_converter_pwa"
 version = "2021.704.1439"
 authors = ["bestia.dev"]
+homepage = "https://bestia.dev"
 edition = "2018"
 description = "SEY currency converter Progressive Web App"
 repository = "https://github.com/bestia-dev/sey_currency_converter_pwa"
