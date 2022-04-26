@@ -1,17 +1,20 @@
 {
     "cSpell.words": [
-        "IDBP",
-        "Lxss",
-        "Roboto",
+        "bestia",
+        "bindgen",
         "currdb",
+        "enduml",
         "fadein",
         "floatrates",
         "focusring",
         "fontawesome",
         "idbjs",
+        "IDBP",
         "idbr",
         "idbx",
         "idxdb",
+        "indexeddb",
+        "Lxss",
         "necolas",
         "nodesource",
         "notranslate",
@@ -20,7 +23,16 @@
         "onpointerup",
         "osit",
         "overscroll",
+        "plantuml",
         "readwrite",
-        "transpilation"
+        "Roboto",
+        "rustc",
+        "rustfmt",
+        "rustlang",
+        "rustprojects",
+        "serde",
+        "startuml",
+        "transpilation",
+        "webassembly"
     ]
 }
