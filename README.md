@@ -1,4 +1,4 @@
-[comment]: # (lmake_md_to_doc_comments segment start A)
+[comment]: # (auto_md_to_doc_comments segment start A)
 
 # SEY currency converter pwa
 
@@ -257,3 +257,5 @@ Snackbar or toast is a modal window that show some information to the user and a
 First I tried with a `jpg` img, but it becomes width=100% and that is not what ai want.  
 If I change it to `png` img, it looks good. Strange tricks:  
 `![screenshot](https://github.com/bestia-dev/sey_currency_converter_pwa/raw/main/web_server_folder/sey_currency_converter_pwa/images/Screenshot.png "screenshot")`  
+
+[comment]: # (auto_md_to_doc_comments segment end A)
