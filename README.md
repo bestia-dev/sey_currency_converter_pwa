@@ -10,9 +10,9 @@
 [comment]: # (auto_cargo_toml_to_md end)
 
 [comment]: # (auto_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1550-green.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1552-green.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-97-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
-[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-320-purple.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+[![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-322-purple.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 
@@ -205,9 +205,7 @@ For that I created the module `currdb_mod` and encapsulated all the necessary fu
 My code must use only this module for any database need.  
 For every `ObjectStore` I created its own module to make things more easy to separate and encapsulate.  
 
-<!-- markdownlint-disable MD033 -->
-<details>
-  <summary>plantuml diagram</summary>
+[comment]: # (auto_plantuml start)
 
 ```plantuml
 @startuml
@@ -220,12 +218,11 @@ For every `ObjectStore` I created its own module to make things more easy to sep
 note right of (idbr_mod): I want to isolate this generic library
 note right of (currdb_mod): encapsulates all functions for db work
 @enduml
-  ```
+```
 
-</details>  
-<!-- markdownlint-enable MD033 -->
+![svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo](images/svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo.svg)
 
-![currdb_diagram](images/currdb_diagram.svg)  
+[comment]: # (auto_plantuml end)
 
 A lot of functions are just public functions in a module. But for some I created objects with methods. It is a mix depending what is easier to write and maybe better for performance.  I didn't use the `Static methods` (methods without self as opposed to `instance methods`) here because the `module` is already a good container for functions encapsulation.  
 

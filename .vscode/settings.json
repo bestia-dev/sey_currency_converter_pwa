@@ -33,6 +33,7 @@
         "rustprojects",
         "serde",
         "startuml",
+        "structs",
         "transpilation",
         "webassembly"
     ]

@@ -106,6 +106,7 @@ fn task_build() {
     let cargo_toml = CargoToml::read();
     auto_version_increment_semver_or_date();
     auto_cargo_toml_to_md();
+
     run_shell_command("cargo fmt");
     run_shell_command("wasm-pack build --target web --release");
     // copy to local web_server_folder
@@ -130,7 +131,6 @@ fn task_release() {
     let cargo_toml = CargoToml::read();
     auto_version_increment_semver_or_date();
     auto_cargo_toml_to_md();
-    auto_lines_of_code("");
 
     run_shell_command("cargo fmt");
     run_shell_command("wasm-pack build --target web --release");
@@ -154,6 +154,7 @@ package_name = cargo_toml.package_name()
 fn task_doc() {
     let cargo_toml = CargoToml::read();
     auto_cargo_toml_to_md();
+    auto_plantuml();
     auto_lines_of_code("");
     auto_md_to_doc_comments();
     run_shell_command("cargo doc --no-deps --document-private-items");
@@ -191,7 +192,7 @@ fn task_commit_and_push(arg_2: Option<String>) {
             println!(
                 r#"
 After `cargo auto commit_and_push "message"`
-run `cargo auto publish_to_crates_io`
+run `cargo auto publish_to_web`
 "#
             );
         }
@@ -208,14 +209,12 @@ fn task_publish_to_web() {
         version = cargo_toml.package_version()
     );
     run_shell_command(&shell_command);
-    // sync one way to local copy of the web server
-    run_shell_command("rsync -a --info=progress2 --delete-after ~/rustprojects/sey_currency_converter_pwa/web_server_folder/sey_currency_converter_pwa/ ~/rustprojects/googlecloud/var/www/bestia.dev/sey_currency_converter_pwa/");
     // sync one-way local copy to web server
-    run_shell_command("rsync -e ssh -a --info=progress2 --delete-after ~/rustprojects/googlecloud/var/www/bestia.dev/sey_currency_converter_pwa/ luciano_bestia@bestia.dev:/var/www/bestia.dev/sey_currency_converter_pwa/");
+    run_shell_command("rsync -e ssh -a --info=progress2 --delete-after ~/rustprojects/sey_currency_converter_pwa/web_server_folder/sey_currency_converter_pwa/ luciano_bestia@bestia.dev:/var/www/bestia.dev/sey_currency_converter_pwa/");
     println!(
         r#"
 After `cargo auto publish_to_web', 
-check the web page `https://bestia.dev/{package_name}/`.
+check the web page `https://bestia.dev/{package_name}/`
 "#,
         package_name = cargo_toml.package_name(),
     );
