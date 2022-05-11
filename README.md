@@ -2,21 +2,21 @@
 
 # SEY currency converter pwa
 
-[comment]: # (lmake_cargo_toml_to_md start)
+[comment]: # (auto_cargo_toml_to_md start)
 
 **SEY currency converter Progressive Web App**  
-***version: 2021.704.1439  date: 2021-07-04 author: [bestia.dev](https://bestia.dev) repository: [GitHub](https://github.com/bestia-dev/sey_currency_converter_pwa)***  
+***version: 2022.511.1507 date: 2022-05-11 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/bestia-dev/sey_currency_converter_pwa)***  
 
-[comment]: # (lmake_cargo_toml_to_md end)
+[comment]: # (auto_cargo_toml_to_md end)
 
-[comment]: # (lmake_lines_of_code start)
+[comment]: # (auto_lines_of_code start)
 [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1550-green.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-97-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-320-purple.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 
-[comment]: # (lmake_lines_of_code end)
+[comment]: # (auto_lines_of_code end)
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/blob/master/LICENSE)
 [![Rust](https://github.com/bestia-dev/sey_currency_converter_pwa/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)

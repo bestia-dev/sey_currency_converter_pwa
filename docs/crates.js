@@ -1,0 +1,1 @@
+window.ALL_CRATES = ["sey_currency_converter_pwa"];

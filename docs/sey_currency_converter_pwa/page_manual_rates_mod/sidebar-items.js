@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["div_back_on_click","go back to page_main"],["page_manual_rates","fetch and inject HTML fragment into index.html/div_for_wasm_html_injecting"]]});

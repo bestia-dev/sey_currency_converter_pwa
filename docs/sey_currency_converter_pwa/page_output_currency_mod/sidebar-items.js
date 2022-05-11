@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["div_back_on_click","go back to page_main"],["div_list_set",""],["div_search_button_on_click",""],["input_search_on_keyup",""],["page_output_currency","fetch and inject HTML fragment into index.html/div_for_wasm_html_injecting"],["row_cell_on_click","unit is a field in the row of the list"]],"struct":[["TEMPLATE",""]]});

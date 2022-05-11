@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["create_store_and_init",""],["from_jsvalue",""],["get_rate",""],["put_object_store_inside_transaction","put in ObjectStore"],["to_jsvalue",""]],"static":[["THIS_OBJECT_STORE",""]],"struct":[["ValueStruct","fields in the value column of key-value manual_rates"]]});
