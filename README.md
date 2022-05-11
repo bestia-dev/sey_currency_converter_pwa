@@ -10,8 +10,8 @@
 [comment]: # (auto_cargo_toml_to_md end)
 
 [comment]: # (auto_lines_of_code start)
-[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1552-green.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
-[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-97-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+[![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1551-green.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+[![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-341-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-322-purple.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
@@ -220,7 +220,7 @@ note right of (currdb_mod): encapsulates all functions for db work
 @enduml
 ```
 
-![svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo](images/svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo.svg)
+![svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo](https://github.com/bestia-dev/sey_currency_converter_pwa/raw/main/images/svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo.svg)
 
 [comment]: # (auto_plantuml end)
 

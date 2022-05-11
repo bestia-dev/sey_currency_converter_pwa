@@ -7,8 +7,8 @@
     <h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">sey_currency_converter_pwa</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span></h1><span class="out-of-band"><a class="srclink" href="../src/sey_currency_converter_pwa/lib.rs.html#4-301">source</a> · <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span></div><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><h2 id="sey-currency-converter-pwa"><a href="#sey-currency-converter-pwa">SEY currency converter pwa</a></h2>
 <p><strong>SEY currency converter Progressive Web App</strong><br />
 <em><strong>version: 2022.511.1507 date: 2022-05-11 author: <a href="https://bestia.dev">bestia.dev</a> repository: <a href="https://github.com/bestia-dev/sey_currency_converter_pwa">Github</a></strong></em></p>
-<p><a href="https://github.com/bestia-dev/sey_currency_converter_pwa/"><img src="https://img.shields.io/badge/Lines_in_Rust-1552-green.svg" alt="Lines in Rust code" /></a>
-<a href="https://github.com/bestia-dev/sey_currency_converter_pwa/"><img src="https://img.shields.io/badge/Lines_in_Doc_comments-97-blue.svg" alt="Lines in Doc comments" /></a>
+<p><a href="https://github.com/bestia-dev/sey_currency_converter_pwa/"><img src="https://img.shields.io/badge/Lines_in_Rust-1551-green.svg" alt="Lines in Rust code" /></a>
+<a href="https://github.com/bestia-dev/sey_currency_converter_pwa/"><img src="https://img.shields.io/badge/Lines_in_Doc_comments-341-blue.svg" alt="Lines in Doc comments" /></a>
 <a href="https://github.com/bestia-dev/sey_currency_converter_pwa/"><img src="https://img.shields.io/badge/Lines_in_comments-322-purple.svg" alt="Lines in Comments" /></a>
 <a href="https://github.com/bestia-dev/sey_currency_converter_pwa/"><img src="https://img.shields.io/badge/Lines_in_examples-0-yellow.svg" alt="Lines in examples" /></a>
 <a href="https://github.com/bestia-dev/sey_currency_converter_pwa/"><img src="https://img.shields.io/badge/Lines_in_tests-0-orange.svg" alt="Lines in tests" /></a></p>
@@ -161,7 +161,7 @@ For every <code>ObjectStore</code> I created its own module to make things more 
 note right of (idbr_mod): I want to isolate this generic library
 note right of (currdb_mod): encapsulates all functions for db work
 @enduml</code></pre></div>
-<p><img src="images/svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo.svg" alt="svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo" /></p>
+<p><img src="https://github.com/bestia-dev/sey_currency_converter_pwa/raw/main/images/svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo.svg" alt="svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo" /></p>
 <p>A lot of functions are just public functions in a module. But for some I created objects with methods. It is a mix depending what is easier to write and maybe better for performance.  I didn’t use the <code>Static methods</code> (methods without self as opposed to <code>instance methods</code>) here because the <code>module</code> is already a good container for functions encapsulation.</p>
 <h3 id="swipe"><a href="#swipe">Swipe</a></h3>
 <p>The <code>Swipe gesture</code> is not a native html5 event. It is pretty complicated to recognize this gesture. Even more on different browsers (Safari).<br />
