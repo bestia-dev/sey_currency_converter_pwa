@@ -1,29 +1,29 @@
-[comment]: # (auto_md_to_doc_comments segment start A)
+[//]: # (auto_md_to_doc_comments segment start A)
 
 # SEY currency converter pwa
 
-[comment]: # (auto_cargo_toml_to_md start)
+[//]: # (auto_cargo_toml_to_md start)
 
 **SEY currency converter Progressive Web App**  
 ***version: 2022.511.1507 date: 2022-05-11 author: [bestia.dev](https://bestia.dev) repository: [Github](https://github.com/bestia-dev/sey_currency_converter_pwa)***  
 
-[comment]: # (auto_cargo_toml_to_md end)
+[//]: # (auto_cargo_toml_to_md end)
 
-![status](https://img.shields.io/badge/maintained-green) 
-![status](https://img.shields.io/badge/ready_for_use-green) 
+ ![maintained](https://img.shields.io/badge/maintained-green)
+ ![ready_for_use](https://img.shields.io/badge/ready_for_use-green)
 
-[comment]: # (auto_lines_of_code start)
+[//]: # (auto_lines_of_code start)
 [![Lines in Rust code](https://img.shields.io/badge/Lines_in_Rust-1551-green.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in Doc comments](https://img.shields.io/badge/Lines_in_Doc_comments-341-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in Comments](https://img.shields.io/badge/Lines_in_comments-322-purple.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in examples](https://img.shields.io/badge/Lines_in_examples-0-yellow.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 [![Lines in tests](https://img.shields.io/badge/Lines_in_tests-0-orange.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
 
-[comment]: # (auto_lines_of_code end)
+[//]: # (auto_lines_of_code end)
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/blob/master/LICENSE)
-[![Rust](https://github.com/bestia-dev/sey_currency_converter_pwa/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
-![Hits](https://bestia.dev/webpage_hit_counter/get_svg_image/92454377.svg)
+ [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/blob/master/LICENSE)
+ [![Rust](https://github.com/bestia-dev/sey_currency_converter_pwa/workflows/RustAction/badge.svg)](https://github.com/bestia-dev/sey_currency_converter_pwa/)
+ ![sey_currency_converter_pwa](https://bestia.dev/webpage_hit_counter/get_svg_image/92454377.svg)
 
 Hashtags: #rustlang #tutorial #pwa #wasm #webassembly  
 My projects on Github are more like a tutorial than a finished product: [bestia-dev tutorials](https://github.com/bestia-dev/tutorials_rust_wasm).
@@ -209,7 +209,7 @@ For that I created the module `currdb_mod` and encapsulated all the necessary fu
 My code must use only this module for any database need.  
 For every `ObjectStore` I created its own module to make things more easy to separate and encapsulate.  
 
-[comment]: # (auto_plantuml start)
+[//]: # (auto_plantuml start)
 
 ```plantuml
 @startuml
@@ -226,7 +226,7 @@ note right of (currdb_mod): encapsulates all functions for db work
 
 ![svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo](https://github.com/bestia-dev/sey_currency_converter_pwa/raw/main/images/svg_4wgAUkzmbR1PWCyykuA1K2ubOAr2XaImUVzp-JLeESo.svg)
 
-[comment]: # (auto_plantuml end)
+[//]: # (auto_plantuml end)
 
 A lot of functions are just public functions in a module. But for some I created objects with methods. It is a mix depending what is easier to write and maybe better for performance.  I didn't use the `Static methods` (methods without self as opposed to `instance methods`) here because the `module` is already a good container for functions encapsulation.  
 
@@ -273,4 +273,4 @@ So I can drink a free beer for your health :-)
 [//bestiadev.substack.com](https://bestiadev.substack.com)  
 [//youtube.com/@bestia-dev-tutorials](https://youtube.com/@bestia-dev-tutorials)  
 
-[comment]: # (auto_md_to_doc_comments segment end A)
+[//]: # (auto_md_to_doc_comments segment end A)
