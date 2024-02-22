@@ -118,7 +118,7 @@ fn task_build() {
 1. Run the web server in a separate terminal: 'cd ~/rustprojects/{package_name}/web_server_folder/;basic-http-server'
 2. Run the web app in your browser: 'http://127.0.0.1:4000/{package_name}/'
 
-After `cargo auto build`, run the tests and the code. If ok, then 
+After `cargo auto build`, run the tests and the code. If ok then 
 run `cargo auto release`
 "#,
 package_name = cargo_toml.package_name()
@@ -142,7 +142,7 @@ fn task_release() {
         r#"
 1. Run the web server in a separate terminal: 'cd ~/rustprojects/{package_name}/web_server_folder/;basic-http-server'
 2. Run the web app in your browser: 'http://127.0.0.1:4000/{package_name}/'
-After `cargo auto release`, run the tests and the code. If ok, then 
+After `cargo auto release`, run the tests and the code. If ok then 
 run `cargo auto doc`
 "#,
 package_name = cargo_toml.package_name()
@@ -165,7 +165,7 @@ fn task_doc() {
     // message to help user with next move
     println!(
         r#"
-After `cargo auto doc`, check `docs/index.html`. If ok, then test the documentation code examples
+After `cargo auto doc`, check `docs/index.html`. If ok then test the documentation code examples
 run `cargo auto test`
 "#
     );
@@ -176,7 +176,7 @@ fn task_test() {
     run_shell_command("cargo test");
     println!(
         r#"
-After `cargo auto test`. If ok, then 
+After `cargo auto test`. If ok then 
 run `cargo auto commit_and_push "message"` with mandatory commit message
 "#
     );
