@@ -1,10 +1,19 @@
-//! automation_tasks_rs for sey_currency_converter_pwa
+// automation_tasks_rs for sey_currency_converter_pwa
 
-use cargo_auto_lib::*;
+// region: library with basic automation tasks
+use cargo_auto_lib as cl;
+// traits must be in scope (Rust strangeness)
+use cl::CargoTomlPublicApiMethods;
 
-/// automation_tasks_rs for sey_currency_converter_pwa
+use cargo_auto_lib::GREEN;
+use cargo_auto_lib::RED;
+use cargo_auto_lib::RESET;
+use cargo_auto_lib::YELLOW;
+
+// region: library with basic automation tasks
+
 fn main() {
-    exit_if_not_run_in_rust_project_root_directory();
+    cl::exit_if_not_run_in_rust_project_root_directory();
 
     // get CLI arguments
     let mut args = std::env::args();
@@ -25,7 +34,7 @@ fn match_arguments_and_call_tasks(mut args: std::env::Args) {
             if &task == "completion" {
                 completion();
             } else {
-                println!("Running automation task: {}", &task);
+                println!("{YELLOW}Running automation task: {task}{RESET}");
                 if &task == "build" {
                     task_build();
                 } else if &task == "release" {
@@ -104,15 +113,15 @@ fn completion() {
 /// cargo build
 fn task_build() {
     let cargo_toml = CargoToml::read();
-    auto_version_increment_semver_or_date();
-    auto_cargo_toml_to_md();
+    cl::auto_version_increment_semver_or_date();
+    cl::auto_cargo_toml_to_md();
 
-    run_shell_command("cargo fmt");
-    run_shell_command("wasm-pack build --target web --release");
+    cl::run_shell_command("cargo fmt");
+    cl::run_shell_command("wasm-pack build --target web --release");
     // copy to local web_server_folder
-    run_shell_command("\\rsync -a --delete-after pkg/ web_server_folder/sey_currency_converter_pwa/pkg/");
+    cl::run_shell_command("\\rsync -a --delete-after pkg/ web_server_folder/sey_currency_converter_pwa/pkg/");
     // run typescript compiler with tsconfig.json
-    run_shell_command("tsc -b --verbose");
+    cl::run_shell_command("tsc -b --verbose");
     println!(
         r#"
 1. Run the web server in a separate terminal: 'cd ~/rustprojects/{package_name}/web_server_folder/;basic-http-server'
@@ -129,15 +138,15 @@ package_name = cargo_toml.package_name()
 /// cargo build --release
 fn task_release() {
     let cargo_toml = CargoToml::read();
-    auto_version_increment_semver_or_date();
-    auto_cargo_toml_to_md();
+    cl::auto_version_increment_semver_or_date();
+    cl::auto_cargo_toml_to_md();
 
-    run_shell_command("cargo fmt");
-    run_shell_command("wasm-pack build --target web --release");
+    cl::run_shell_command("cargo fmt");
+    cl::run_shell_command("wasm-pack build --target web --release");
     // copy to local web_server_folder
-    run_shell_command("\\rsync -a --delete-after pkg/ web_server_folder/sey_currency_converter_pwa/pkg/");
+    cl::run_shell_command("\\rsync -a --delete-after pkg/ web_server_folder/sey_currency_converter_pwa/pkg/");
     // run typescript compiler with tsconfig.json
-    run_shell_command("tsc -b --verbose");
+    cl::run_shell_command("tsc -b --verbose");
     println!(
         r#"
 1. Run the web server in a separate terminal: 'cd ~/rustprojects/{package_name}/web_server_folder/;basic-http-server'
@@ -152,50 +161,68 @@ package_name = cargo_toml.package_name()
 
 /// cargo doc, then copies to /docs/ folder, because this is a github standard folder
 fn task_doc() {
-    let cargo_toml = CargoToml::read();
-    auto_cargo_toml_to_md();
-    auto_plantuml(&cargo_toml.package_repository().unwrap());
-    auto_lines_of_code("");
-    auto_md_to_doc_comments();
-    run_shell_command("cargo doc --no-deps --document-private-items");
+    let cargo_toml = cl::CargoToml::read();
+    cl::auto_cargo_toml_to_md();
+    cl::auto_lines_of_code("");
+    cl::auto_plantuml(&cargo_toml.package_repository().unwrap());
+    cl::auto_md_to_doc_comments();
+
+    cl::run_shell_command("cargo doc --no-deps --document-private-items");
     // copy target/doc into docs/ because it is github standard
-    run_shell_command("rsync -a --info=progress2 --delete-after target/doc/ docs/");
+    cl::run_shell_command("rsync -a --info=progress2 --delete-after target/doc/ docs/");
     // Create simple index.html file in docs directory
-    run_shell_command(&format!("echo \"<meta http-equiv=\\\"refresh\\\" content=\\\"0; url={}/index.html\\\" />\" > docs/index.html",cargo_toml.package_name().replace("-","_")));    
+    cl::run_shell_command(&format!(
+        r#"echo "<meta http-equiv=\"refresh\" content=\"0; url={}/index.html\" />" > docs/index.html"#,
+        cargo_toml.package_name().replace("-", "_")
+    ));
+    // pretty html
+    cl::auto_doc_tidy_html().unwrap();
+    cl::run_shell_command("cargo fmt");
     // message to help user with next move
     println!(
         r#"
-After `cargo auto doc`, check `docs/index.html`. If ok then test the documentation code examples
-run `cargo auto test`
+    {YELLOW}After `cargo auto doc`, check `docs/index.html`. If ok then test the documentation code examples{RESET}
+{GREEN}cargo auto test{RESET}
 "#
     );
 }
 
 /// cargo test
 fn task_test() {
-    run_shell_command("cargo test");
+    cl::run_shell_command("cargo test");
     println!(
-        r#"
-After `cargo auto test`. If ok then 
-run `cargo auto commit_and_push "message"` with mandatory commit message
+r#"
+    {YELLOW}After `cargo auto test`. If ok then {RESET}
+{GREEN}cargo auto commit_and_push "message"{RESET}
+    {YELLOW}with mandatory commit message{RESET}
 "#
     );
 }
 
 /// commit and push
 fn task_commit_and_push(arg_2: Option<String>) {
-    match arg_2 {
-        None => println!("Error: message for commit is mandatory"),
-        Some(message) => {
-            run_shell_command(&format!(r#"git add -A && git commit --allow-empty -m "{}""#, message));
-            run_shell_command("git push");
-            println!(
-                r#"
-After `cargo auto commit_and_push "message"`
-run `cargo auto publish_to_web`
-"#
-            );
+    let Some(message) = arg_2 else {
+        eprintln!("{RED}Error: Message for commit is mandatory. Exiting.{RESET}");
+        // early exit
+        return;
+    };
+
+    // init repository if needed. If it is not init then normal commit and push.
+    if !cl::init_repository_if_needed(&message) {
+        // separate commit for docs if they changed, to not make a lot of noise in the real commit
+        if std::path::Path::new("docs").exists() {
+            cl::run_shell_command(r#"git add docs && git diff --staged --quiet || git commit -m "update docs" "#);
         }
+        cl::add_message_to_unreleased(&message);
+        // the real commit of code
+        cl::run_shell_command(&format!( r#"git add -A && git diff --staged --quiet || git commit -m "{message}" "#));
+        cl::run_shell_command("git push");
+        println!(
+r#"
+    {YELLOW}After `cargo auto commit_and_push "message"`{RESET}
+{GREEN}cargo auto publish_to_crates_io{RESET}
+"#
+        );
     }
 }
 
@@ -208,9 +235,9 @@ fn task_publish_to_web() {
         "git tag -f -a v{version} -m version_{version}",
         version = cargo_toml.package_version()
     );
-    run_shell_command(&shell_command);
+    cl::run_shell_command(&shell_command);
     // sync one-way local copy to web server
-    run_shell_command("rsync -e ssh -a --info=progress2 --delete-after ~/rustprojects/sey_currency_converter_pwa/web_server_folder/sey_currency_converter_pwa/ luciano_bestia@bestia.dev:/var/www/bestia.dev/sey_currency_converter_pwa/");
+    cl::run_shell_command("rsync -e ssh -a --info=progress2 --delete-after ~/rustprojects/sey_currency_converter_pwa/web_server_folder/sey_currency_converter_pwa/ luciano_bestia@bestia.dev:/var/www/bestia.dev/sey_currency_converter_pwa/");
     println!(
         r#"
 After `cargo auto publish_to_web', 
