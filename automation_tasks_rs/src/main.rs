@@ -112,7 +112,7 @@ fn completion() {
 
 /// cargo build
 fn task_build() {
-    let cargo_toml = CargoToml::read();
+    let cargo_toml = cl::CargoToml::read();
     cl::auto_version_increment_semver_or_date();
     cl::auto_cargo_toml_to_md();
 
@@ -137,7 +137,7 @@ package_name = cargo_toml.package_name()
 
 /// cargo build --release
 fn task_release() {
-    let cargo_toml = CargoToml::read();
+    let cargo_toml = cl::CargoToml::read();
     cl::auto_version_increment_semver_or_date();
     cl::auto_cargo_toml_to_md();
 
@@ -229,7 +229,7 @@ r#"
 /// publish to web, git tag
 fn task_publish_to_web() {
     println!(r#"The ssh-agent is used to authenticate on the web server."#);
-    let cargo_toml = CargoToml::read();
+    let cargo_toml = cl::CargoToml::read();
     // git tag
     let shell_command = format!(
         "git tag -f -a v{version} -m version_{version}",
