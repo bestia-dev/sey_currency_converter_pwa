@@ -8,6 +8,7 @@ description = "SEY currency converter Progressive Web App"
 repository = "https://github.com/bestia-dev/sey_currency_converter_pwa"
 readme = "README.md"
 license = "MIT"
+# Keyword must be only one word: lowercase letters, hyphens(-) or numbers, less then 35 characters, at most 5 keywords per crate
 keywords = ["wasm"]
 categories = ["learning"]
 resolver = "2"
